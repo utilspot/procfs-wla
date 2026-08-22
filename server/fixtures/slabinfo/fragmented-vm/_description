@@ -1,0 +1,1 @@
+VM after a find(1) — caches holding a lot of memory with most objects freed, and two empty caches

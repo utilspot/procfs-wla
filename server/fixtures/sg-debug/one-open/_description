@@ -1,0 +1,1 @@
+One descriptor open on one device, with nothing in flight — captured off a live machine by holding /dev/sg0 open

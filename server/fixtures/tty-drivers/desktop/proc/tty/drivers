@@ -1,0 +1,12 @@
+/dev/tty             /dev/tty        5       0 system:/dev/tty
+/dev/console         /dev/console    5       1 system:console
+/dev/ptmx            /dev/ptmx       5       2 system
+/dev/vc/0            /dev/vc/0       4       0 system:vtmaster
+rfcomm               /dev/rfcomm   216 0-255 serial
+acm                  /dev/ttyACM   166 0-255 serial
+ttyprintk            /dev/ttyprintk   5       3 console
+serial               /dev/ttyS       4 64-95 serial
+usbserial            /dev/ttyUSB   188 0-511 serial
+pty_slave            /dev/pts      136 0-1048575 pty:slave
+pty_master           /dev/ptm      128 0-1048575 pty:master
+unknown              /dev/tty        4 1-63 console

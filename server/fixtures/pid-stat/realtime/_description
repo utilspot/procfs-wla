@@ -1,0 +1,1 @@
+A SCHED_FIFO thread — where the priority field is the real-time priority written backwards

@@ -1,0 +1,26 @@
+Character devices:
+  1 mem
+  2 pty
+  3 ttyp
+  4 ttyS
+  5 cua
+  7 vcs
+ 10 misc
+ 14 sound
+ 21 sg
+ 36 netlink
+128 ptm
+136 pts
+162 raw
+254 pcmcia
+
+Block devices:
+  1 ramdisk
+  2 fd
+  3 ide0
+  7 loop
+  8 sd
+  9 md
+ 11 sr
+ 22 ide1
+ 65 sd

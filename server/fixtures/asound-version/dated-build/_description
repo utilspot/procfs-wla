@@ -1,0 +1,1 @@
+A build with CONFIG_SND_DATE filled in — a date in parentheses, which the in-tree empty macro never prints

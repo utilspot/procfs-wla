@@ -1,0 +1,10 @@
+vboxdrv 671744 4 vboxnetadp,vboxnetflt, Live 0xffffffffc0000000 (OE)
+vboxnetadp 28672 0 - Live 0xffffffffc0021000 (OE)
+vboxnetflt 32768 0 - Live 0xffffffffc0042000 (OE)
+zfs 4030464 6 - Live 0xffffffffc0063000 (PO)
+spl 122880 1 zfs, Live 0xffffffffc0084000 (O)
+wl 6373376 0 - Live 0xffffffffc00a5000 (P)
+cfg80211 999424 1 wl, Live 0xffffffffc00c6000
+rtl8812au 2371584 0 - Unloading 0xffffffffc00e7000 (OEF)
+ext4 962560 1 - Live 0xffffffffc0108000
+jbd2 139264 1 ext4, Live 0xffffffffc0129000

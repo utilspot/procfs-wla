@@ -1,0 +1,7 @@
+0xffffc90000000000-0xffffc90000005000   20480 pcpu_get_vm_areas+0x0/0x9c0 vmalloc N0=5
+0xffffc90000005000-0xffffc90000007000    8192 acpi_os_map_iomem+0x175/0x1b0 phys=0x00000000fed00000 ioremap
+0xffffc90000007000-0xffffc90000808000 8392704 alloc_large_system_hash+0x1a3/0x2a8 pages=2048 vmalloc N0=1024 N1=1024
+0xffffc90000808000-0xffffc90000908000 1048576 mlx5_pci_init+0x1b3/0x340 phys=0x000038ffff000000 ioremap
+0xffffc90000908000-0xffffc90000928000  131072 load_module+0x8cd/0xb60 pages=31 vmalloc N0=31
+0xffffc90000930000-0xffffc90000941000   69632 sched_init_numa+0x2c1/0x520 pages=16 vmalloc N1=16
+0xffffc90000941000-0xffffc90000982000  266240 kvm_arch_init_vm+0x8a/0x1e0 pages=64 vmalloc N0=32 N1=32

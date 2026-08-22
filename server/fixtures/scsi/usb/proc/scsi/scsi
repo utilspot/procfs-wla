@@ -1,0 +1,19 @@
+Attached devices:
+Host: scsi4 Channel: 00 Id: 00 Lun: 00
+  Vendor: SanDisk  Model: Cruzer Blade     Rev: 1.00
+  Type:   Direct-Access                    ANSI  SCSI revision: 06
+Host: scsi5 Channel: 00 Id: 00 Lun: 00
+  Vendor: Generic  Model: STORAGE DEVICE   Rev: 1206
+  Type:   Direct-Access                    ANSI  SCSI revision: 06
+Host: scsi5 Channel: 00 Id: 00 Lun: 01
+  Vendor: Generic  Model: STORAGE DEVICE   Rev: 1206
+  Type:   Direct-Access                    ANSI  SCSI revision: 06
+Host: scsi5 Channel: 00 Id: 00 Lun: 02
+  Vendor: Generic  Model: STORAGE DEVICE   Rev: 1206
+  Type:   Direct-Access                    ANSI  SCSI revision: 06
+Host: scsi5 Channel: 00 Id: 00 Lun: 03
+  Vendor: Generic  Model: STORAGE DEVICE   Rev: 1206
+  Type:   Direct-Access                    ANSI  SCSI revision: 06
+Host: scsi6 Channel: 00 Id: 00 Lun: 00
+  Vendor: WD       Model: My Passport 25E2 Rev: 4004
+  Type:   Direct-Access                    ANSI  SCSI revision: 06

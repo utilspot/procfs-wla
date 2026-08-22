@@ -1,0 +1,1 @@
+The seven devices of the RAID machine, in the order /proc/scsi/scsi lists them — four disks with commands in flight, the enclosure and the controller, and the BMC's CD-ROM last

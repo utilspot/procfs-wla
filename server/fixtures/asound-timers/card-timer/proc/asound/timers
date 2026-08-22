@@ -1,0 +1,6 @@
+G0: system timer : 1000.000us (10000000 ticks)
+G3: HR timer : 0.001us (1000000000 ticks)
+C0-0: EMU10K1 timer : 20.833us (1024 ticks)
+  Client sequencer queue 0 : running
+P0-0-0: PCM Playback 0-0-0 : 5333.333us (1 ticks) SLAVE
+P0-0-1: PCM Capture 0-0-1 : SLAVE

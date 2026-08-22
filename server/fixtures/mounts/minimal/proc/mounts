@@ -1,0 +1,4 @@
+rootfs / rootfs rw 0 0
+proc /proc proc rw,relatime 0 0
+sysfs /sys sysfs rw,relatime 0 0
+devtmpfs /dev devtmpfs rw,relatime,size=10240k,nr_inodes=61440,mode=755 0 0

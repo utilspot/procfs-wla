@@ -1,0 +1,21 @@
+0xffffc90000000000-0xffffc90000005000   20480 pcpu_get_vm_areas+0x0/0x9c0 vmalloc
+0xffffc90000005000-0xffffc90000007000    8192 acpi_os_map_iomem+0x175/0x1b0 phys=0x00000000fed00000 ioremap
+0xffffc90000007000-0xffffc9000000c000   20480 gen_pool_add_virt+0x3e/0xa0 ioremap
+0xffffc9000000c000-0xffffc9000000e000    8192 bpf_prog_alloc_no_stats+0x33/0xa0 pages=1 vmalloc
+0xffffc9000000e000-0xffffc90000010000    8192 memremap+0x1a2/0x280 phys=0x00000000000f5000 ioremap
+0xffffc90000013000-0xffffc9000001c000   36864 kernel_clone+0xa3/0x3d0 pages=8 vmalloc
+0xffffc9000001c000-0xffffc9000001e000    8192 n_tty_open+0x1c/0xc0 pages=1 vmalloc
+0xffffc9000001e000-0xffffc9000002e000   65536 load_module+0x8cd/0xb60 pages=15 vmalloc
+0xffffc9000002e000-0xffffc90000030000    8192 bpf_jit_binary_alloc+0x5b/0xd0 pages=1 vmalloc
+0xffffc90000030000-0xffffc90000070000  262144 pcpu_mem_zalloc+0x4c/0x80 pages=64 vmalloc
+0xffffc90000080000-0xffffc900000a1000  135168 swap_cgroup_swapon+0x59/0x140 pages=32 vmalloc
+0xffffc900000a1000-0xffffc900004a2000 4198400 alloc_large_system_hash+0x1a3/0x2a8 pages=1024 vmalloc
+0xffffc900004a2000-0xffffc900004a4000    8192 vm_map_ram
+0xffffc900004a4000-0xffffc900004c4000  131072 e1000_probe+0x2a1/0xb50 phys=0x00000000f7d00000 ioremap
+0xffffc900004c4000-0xffffc900004c8000   16384 nvme_pci_enable+0x1d4/0x2d0 phys=0x00000000f7c00000 ioremap
+0xffffc900004c8000-0xffffc900004d0000   32768 xhci_pci_probe+0x64/0x1f0 phys=0x00000000f7b00000 ioremap
+0xffffc900004d0000-0xffffc900004d5000   20480 snd_dma_alloc_dir_pages+0x51/0xe0 pages=4 phys=0x000000010a3f0000 dma-coherent
+0xffffc900004d5000-0xffffc900004e2000   53248 nv_drm_load+0x1c4/0x3e0 [nvidia_drm] pages=12 vmalloc
+0xffffc900005e2000-0xffffc900005ea000   32768 load_module+0x8cd/0xb60 pages=7 vmalloc
+0xffffc900005ea000-0xffffc90000602000   98304 load_module+0x8cd/0xb60 pages=23 vmalloc
+0xffffc90000a02000-0xffffc90001203000 8392704 drm_fbdev_generic_setup+0x74/0x1a0 pages=2048 vmalloc vpages

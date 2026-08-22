@@ -1,0 +1,1 @@
+An ordinary small program: four ELF segments, a heap, libc, a stack and the three the kernel adds to everything

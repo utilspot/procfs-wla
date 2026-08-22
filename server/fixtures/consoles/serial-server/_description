@@ -1,0 +1,1 @@
+Serial-console server — both a VT and a serial line, with the serial one preferred by console=ttyS0

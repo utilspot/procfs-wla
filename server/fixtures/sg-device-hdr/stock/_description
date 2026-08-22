@@ -1,0 +1,1 @@
+The nine names every kernel prints, which is the whole file: a seq_puts of a string literal

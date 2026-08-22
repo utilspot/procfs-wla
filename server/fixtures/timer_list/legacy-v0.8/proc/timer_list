@@ -1,0 +1,81 @@
+Timer List Version: v0.8
+HRTIMER_MAX_CLOCK_BASES: 4
+now at 302118844221 nsecs
+
+cpu: 0
+ clock 0:
+  .base:       ffff9e1a01e20cd80
+  .index:      0
+  .resolution: 1 nsecs
+  .get_time:   ktime_get
+  .offset:     0 nsecs
+active timers:
+ #0: <ffff9e1a01e20cd80>, tick_sched_timer, S:01
+ # expires at 302121963065-302121963065 nsecs [in 3118844 to 3118844 nsecs]
+ clock 1:
+  .base:       ffff9e1a01e20cdc0
+  .index:      1
+  .resolution: 1 nsecs
+  .get_time:   ktime_get_real
+  .offset:     1723000000000000000 nsecs
+active timers:
+ clock 2:
+  .base:       ffff9e1a01e20ce00
+  .index:      2
+  .resolution: 1 nsecs
+  .get_time:   ktime_get_boottime
+  .offset:     0 nsecs
+active timers:
+ clock 3:
+  .base:       ffff9e1a01e20ce40
+  .index:      3
+  .resolution: 1 nsecs
+  .get_time:   ktime_get_clocktai
+  .offset:     1723000037000000000 nsecs
+active timers:
+  .expires_next   : 0 nsecs
+  .hres_active    : 0
+  .nr_events      : 0
+  .nr_retries     : 0
+  .nr_hangs       : 0
+  .max_hang_time  : 0 nsecs
+  .nohz_mode      : 1
+  .last_tick      : 302117963065 nsecs
+  .tick_stopped   : 0
+  .idle_jiffies   : 4294967296
+  .idle_calls     : 88442
+  .idle_sleeps    : 41188
+  .idle_entrytime : 0 nsecs
+  .idle_waketime  : 0 nsecs
+  .idle_exittime  : 0 nsecs
+  .idle_sleeptime : 204118844221 nsecs
+  .iowait_sleeptime: 1188442210 nsecs
+  .last_jiffies   : 4294967296
+  .next_timer     : 0
+  .idle_expires   : 0 nsecs
+
+jiffies: 4294967296
+
+Tick Device: mode:     0
+Broadcast device
+Clock Event Device: <NULL>
+
+Tick Device: mode:     0
+Per CPU device: 0
+Clock Event Device: pit
+ max_delta_ns:   27461671
+ min_delta_ns:   15000
+ mult:           2148
+ shift:          32
+ mode:           2
+ next_event:     9223372036854775807 nsecs
+ set_next_event: pit_next_event
+ shutdown: pit_shutdown
+ periodic:  pit_set_periodic
+ oneshot:   pit_set_oneshot
+ event_handler:  tick_handle_periodic
+ retries:        0
+
+tick_broadcast_mask: 0
+tick_broadcast_oneshot_mask: 0
+

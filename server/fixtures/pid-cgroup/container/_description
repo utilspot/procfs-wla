@@ -1,0 +1,1 @@
+Read from inside a container with a cgroup namespace of its own — every path is the root, because the path is resolved against the reader’s namespace and it cannot see past it

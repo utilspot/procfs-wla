@@ -1,0 +1,1 @@
+ARM64 with a GICv3 — the hardware number and trigger separated by a space, plus IPI counters

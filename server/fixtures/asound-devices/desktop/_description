@@ -1,0 +1,1 @@
+An HDA card whose four PCM nodes are the four devices its pcm file lists, plus the control node and the two global ones

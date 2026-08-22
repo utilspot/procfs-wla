@@ -1,0 +1,6 @@
+0083c4a2 I--Q---     3 perm 3f030000  1000  1000 keyring   _ses: 4
+51aa1000 I--Q---     1 expd 3f3f0000  1000  1000 user      stale_token: 96
+51aa1001 IR-Q---     1 perm 3f3f0000  1000  1000 user      revoked_key: 0
+51aa1002 ---Q-N-     1  58s 3f010000  1000  1000 user      missing.example.com: 0
+51aa1003 I--Q--i     1 perm 3f3f0000  1000  1000 user      gone_key: 12
+51aa1004 ---QU--     1 119s 3f010000  1000  1000 dns_resol server.example: 0

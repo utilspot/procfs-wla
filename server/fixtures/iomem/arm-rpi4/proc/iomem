@@ -1,0 +1,22 @@
+00000000-3b3fffff : System RAM
+  00080000-01a7ffff : Kernel code
+  01a80000-01c8ffff : Kernel rodata
+  01c90000-01d5ffff : Kernel data
+  01d60000-01e0ffff : Kernel bss
+3b400000-3bffffff : Reserved
+3c000000-3f7fffff : System RAM
+40000000-fbffffff : System RAM
+fd500000-fd50930f : fd500000.pcie
+fe004000-fe004fff : fe004000.txp
+fe007000-fe0071ff : fe007000.dma
+fe00b840-fe00b87b : fe00b840.mailbox
+fe100000-fe100113 : fe100000.watchdog
+fe101000-fe102fff : fe101000.cprman
+fe201000-fe201fff : serial@7e201000
+fe215000-fe215007 : fe215000.aux
+fe300000-fe3000ff : fe300000.mmcnr
+fe340000-fe3400ff : fe340000.mmc
+600000000-63fffffff : pcie@7d500000
+  600000000-6000fffff : PCI Bus 0000:01
+    600000000-600000fff : 0000:01:00.0
+      600000000-600000fff : xhci-hcd

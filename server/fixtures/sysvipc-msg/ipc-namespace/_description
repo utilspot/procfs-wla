@@ -1,0 +1,1 @@
+An IPC namespace read from inside — pids printed as 0 though the queue has been sent to, and an owner with no mapping

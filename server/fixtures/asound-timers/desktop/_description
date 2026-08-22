@@ -1,0 +1,1 @@
+HDA on a 1000 Hz kernel — one stream configured at a 512-frame period, and the sequencer holding the hrtimer

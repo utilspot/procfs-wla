@@ -1,0 +1,1 @@
+A shell and the command it started — one setsid(), so one autogroup, and the two are competing with each other rather than with the machine

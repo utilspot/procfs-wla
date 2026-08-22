@@ -1,0 +1,8 @@
+ 0: reserved
+ 1: SoundBlaster8
+ 2: floppy
+ 3: parport0
+ 4: cascade
+ 5: SoundBlaster16
+ 6: aha1542
+ 7: ide2

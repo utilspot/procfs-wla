@@ -1,0 +1,8 @@
+kernel.root = "UUID=1b9f3a7c-5d2e-4f81-9a6b-0c3d8e7f2a41"
+kernel.rootfstype = "ext4"
+kernel.rootwait
+kernel.console = "ttyS0,115200n8"
+kernel.quiet
+kernel.loglevel = "3"
+init.arg = "--system", "--unit=multi-user.target"
+init.env = "HOME=/root", "TERM=linux"

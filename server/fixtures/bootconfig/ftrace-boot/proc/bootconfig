@@ -1,0 +1,13 @@
+ftrace.event.initcall.initcall_start.enable
+ftrace.event.initcall.initcall_finish.enable
+ftrace.event.sched.sched_switch.enable
+ftrace.event.sched.sched_wakeup.enable
+ftrace.instance.boot.current_tracer = "function_graph"
+ftrace.instance.boot.buffer_size = "1024KB"
+ftrace.instance.boot.events = "initcall.initcall_start", "irq.irq_handler_entry", "sched.sched_switch"
+ftrace.instance.boot.tracing_on = "0"
+ftrace.instance.syscalls.current_tracer = "nop"
+ftrace.instance.syscalls.events = "syscalls.sys_enter_openat"
+ftrace.tracing_on = "1"
+kernel.trace_buf_size = "1M"
+kernel.tp_printk

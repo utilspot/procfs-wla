@@ -1,0 +1,1 @@
+Something wrote an empty mask — the kernel accepts it, then falls back to every online CPU when it comes to use it

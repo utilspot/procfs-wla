@@ -1,0 +1,5 @@
+max_active_device=2  def_reserved_size=32768
+ >>> device=sg0 0:0:0:0   em=1 sg_tablesize=127 excl=0 open_cnt=1
+   FD(1): timeout=60000ms bufflen=32768 (res)sgat=1 low_dma=0
+   cmd_q=0 f_packid=0 k_orphan=0 closed=0
+     No requests active

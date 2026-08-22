@@ -1,0 +1,1 @@
+A container, where nothing ever logged in — every process reads 4294967295, so an audit trail has nobody to name

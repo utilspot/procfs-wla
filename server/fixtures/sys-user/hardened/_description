@@ -1,0 +1,1 @@
+A machine locked down by hand: no user namespaces at all, no fanotify groups, and everything else at or near its floor

@@ -1,0 +1,1 @@
+ARM board with a CMA area reserved, and a larger pageblock order than x86 uses

@@ -1,0 +1,1 @@
+Small VM — two CPUs and virtio devices, each queue landing on its own CPU

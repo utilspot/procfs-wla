@@ -1,0 +1,1 @@
+A namespace made by an unprivileged process, which gave up setgroups() for good to be allowed to write a gid_map at all

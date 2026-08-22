@@ -1,0 +1,6 @@
+0xffffc90000000000-0xffffc90000003000   12288 pcpu_get_vm_areas+0x0/0x9c0 vmalloc
+0xffffc90000003000-0xffffc90000005000    8192 vp_modern_map_capability+0x1c1/0x2c0 phys=0x00000000fe000000 ioremap
+0xffffc90000005000-0xffffc90000006000    4096 vp_modern_map_capability+0x1c1/0x2c0 phys=0x00000000fe001000 ioremap
+0xffffc90000006000-0xffffc90000008000    8192 bpf_prog_alloc_no_stats+0x33/0xa0 pages=1 vmalloc
+0xffffc90000008000-0xffffc90000009000    4096 vm_map_ram
+0xffffc9000000f000-0xffffc90000013000   16384 load_module+0x8cd/0xb60 pages=3 vmalloc

@@ -1,0 +1,207 @@
+name         : ccm(aes)
+driver       : ccm_base(ctr(aes-aesni),cbcmac(aes-aesni))
+module       : ccm
+priority     : 300
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : aead
+async        : no
+blocksize    : 1
+ivsize       : 16
+maxauthsize  : 16
+geniv        : <none>
+
+name         : gcm(aes)
+driver       : generic-gcm-aesni
+module       : aesni_intel
+priority     : 400
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : aead
+async        : yes
+blocksize    : 1
+ivsize       : 12
+maxauthsize  : 16
+geniv        : <none>
+
+name         : gcm(aes)
+driver       : gcm_base(ctr(aes-generic),ghash-generic)
+module       : gcm
+priority     : 100
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : aead
+async        : no
+blocksize    : 1
+ivsize       : 12
+maxauthsize  : 16
+geniv        : <none>
+
+name         : xts(aes)
+driver       : xts-aes-aesni
+module       : aesni_intel
+priority     : 401
+refcnt       : 3
+selftest     : passed
+internal     : no
+type         : skcipher
+async        : yes
+blocksize    : 16
+min keysize  : 32
+max keysize  : 64
+ivsize       : 16
+chunksize    : 16
+walksize     : 16
+
+name         : cbc(aes)
+driver       : cbc-aes-aesni
+module       : aesni_intel
+priority     : 400
+refcnt       : 2
+selftest     : passed
+internal     : no
+type         : skcipher
+async        : yes
+blocksize    : 16
+min keysize  : 16
+max keysize  : 32
+ivsize       : 16
+chunksize    : 16
+walksize     : 16
+
+name         : cbc(aes)
+driver       : cbc(aes-generic)
+module       : cbc
+priority     : 100
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : skcipher
+async        : no
+blocksize    : 16
+min keysize  : 16
+max keysize  : 32
+ivsize       : 16
+chunksize    : 16
+walksize     : 16
+
+name         : aes
+driver       : aes-aesni
+module       : aesni_intel
+priority     : 300
+refcnt       : 6
+selftest     : passed
+internal     : no
+type         : cipher
+blocksize    : 16
+min keysize  : 16
+max keysize  : 32
+
+name         : aes
+driver       : aes-generic
+module       : aes_generic
+priority     : 100
+refcnt       : 4
+selftest     : passed
+internal     : no
+type         : cipher
+blocksize    : 16
+min keysize  : 16
+max keysize  : 32
+
+name         : sha256
+driver       : sha256-avx2
+module       : sha256_ssse3
+priority     : 170
+refcnt       : 2
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 64
+digestsize   : 32
+
+name         : sha256
+driver       : sha256-generic
+module       : kernel
+priority     : 100
+refcnt       : 3
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 64
+digestsize   : 32
+
+name         : sha512
+driver       : sha512-avx2
+module       : sha512_ssse3
+priority     : 170
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 128
+digestsize   : 64
+
+name         : crc32c
+driver       : crc32c-intel
+module       : crc32c_intel
+priority     : 200
+refcnt       : 5
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 1
+digestsize   : 4
+
+name         : ghash
+driver       : ghash-clmulni
+module       : ghash_clmulni_intel
+priority     : 400
+refcnt       : 1
+selftest     : passed
+internal     : yes
+type         : shash
+blocksize    : 16
+digestsize   : 16
+
+name         : hmac(sha256)
+driver       : hmac(sha256-avx2)
+module       : kernel
+priority     : 170
+refcnt       : 2
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 64
+digestsize   : 32
+
+name         : stdrng
+driver       : drbg_pr_hmac_sha512
+module       : kernel
+priority     : 207
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : rng
+seedsize     : 0
+
+name         : rsa
+driver       : rsa-generic
+module       : rsa_generic
+priority     : 100
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : akcipher
+
+name         : ecdh-nist-p256
+driver       : ecdh-nist-p256-generic
+module       : ecdh_generic
+priority     : 100
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : kpp

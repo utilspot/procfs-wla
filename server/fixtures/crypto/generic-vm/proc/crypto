@@ -1,0 +1,100 @@
+name         : cbc(aes)
+driver       : cbc(aes-generic)
+module       : cbc
+priority     : 100
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : skcipher
+async        : no
+blocksize    : 16
+min keysize  : 16
+max keysize  : 32
+ivsize       : 16
+chunksize    : 16
+walksize     : 16
+
+name         : aes
+driver       : aes-generic
+module       : aes_generic
+priority     : 100
+refcnt       : 3
+selftest     : passed
+internal     : no
+type         : cipher
+blocksize    : 16
+min keysize  : 16
+max keysize  : 32
+
+name         : sha256
+driver       : sha256-generic
+module       : kernel
+priority     : 100
+refcnt       : 4
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 64
+digestsize   : 32
+
+name         : sha1
+driver       : sha1-generic
+module       : kernel
+priority     : 100
+refcnt       : 2
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 64
+digestsize   : 20
+
+name         : crc32c
+driver       : crc32c-generic
+module       : kernel
+priority     : 100
+refcnt       : 3
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 1
+digestsize   : 4
+
+name         : stdrng
+driver       : drbg_nopr_hmac_sha256
+module       : kernel
+priority     : 205
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : rng
+seedsize     : 0
+
+name         : hmac(sha256)
+driver       : hmac(sha256-generic)
+module       : kernel
+priority     : 100
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 64
+digestsize   : 32
+
+name         : lzo
+driver       : lzo-generic
+module       : lzo
+priority     : 100
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : compression
+
+name         : cryptd(__aes-generic)
+driver       : cryptd(__aes-generic)
+module       : cryptd
+priority     : 150
+refcnt       : 1
+selftest     : unknown
+internal     : yes
+type         : larval
+flags        : 0x0

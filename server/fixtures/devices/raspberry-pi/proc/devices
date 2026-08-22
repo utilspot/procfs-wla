@@ -1,0 +1,44 @@
+Character devices:
+  1 mem
+  4 /dev/vc/0
+  4 tty
+  4 ttyS
+  5 /dev/tty
+  5 /dev/console
+  5 /dev/ptmx
+  7 vcs
+ 10 misc
+ 13 input
+ 29 fb
+ 81 video4linux
+ 89 i2c
+ 90 mtd
+108 ppp
+116 alsa
+128 ptm
+136 pts
+153 spi
+180 usb
+189 usb_device
+204 ttyAMA
+226 drm
+234 vchiq
+235 vcsm-cma
+236 bcm2835-gpiomem
+237 rpivid-hevcmem
+238 media
+239 rpmb
+240 vcio
+241 bsg
+242 watchdog
+243 rtc
+244 gpiochip
+245 hidraw
+
+Block devices:
+  7 loop
+  8 sd
+ 31 mtdblock
+179 mmc
+254 mdp
+259 blkext

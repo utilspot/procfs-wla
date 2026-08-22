@@ -1,0 +1,3 @@
+       key      msqid perms      cbytes       qnum lspid lrpid   uid   gid  cuid  cgid      stime      rtime      ctime
+1397051191          0   622        3072         24  1188     0  1000  1000  1000  1000 1786783453          0 1786005859
+1397051192      32769   622           0          0     0     0  1000  1000  1000  1000          0          0 1786005859

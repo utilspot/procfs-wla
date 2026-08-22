@@ -1,0 +1,11 @@
+ 63 device-mapper
+ 62 cpu_dma_latency
+ 61 network_throughput
+ 60 network_latency
+175 agpgart
+144 nvram
+135 rtc
+  1 psaux
+228 hpet
+231 snapshot
+200 tun

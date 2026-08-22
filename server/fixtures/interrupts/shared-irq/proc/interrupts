@@ -1,0 +1,11 @@
+                  CPU0       CPU1
+  0:     128473          0   IO-APIC   2-edge      timer
+  1:        284          0   IO-APIC   1-edge      i8042
+  5:      18472          0   IO-APIC   5-edge      uhci_hcd:usb2, eth0, snd_ens1371
+ 10:       9284          0   IO-APIC  10-edge      uhci_hcd:usb3, ehci_hcd:usb1
+ 11:          0          0   IO-APIC  11-edge      ohci_hcd:usb4
+ 14:      92841          0   IO-APIC  14-edge      ata_piix
+ 15:          0          0   IO-APIC  15-edge      ata_piix
+NMI:          0          0   Non-maskable interrupts
+LOC:     847203     839412   Local timer interrupts
+ERR:         12

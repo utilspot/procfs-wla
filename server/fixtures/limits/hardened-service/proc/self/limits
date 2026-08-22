@@ -1,0 +1,17 @@
+Limit                     Soft Limit           Hard Limit           Units     
+Max cpu time              unlimited            unlimited            seconds   
+Max file size             unlimited            unlimited            bytes     
+Max data size             unlimited            unlimited            bytes     
+Max stack size            8388608              8388608              bytes     
+Max core file size        0                    0                    bytes     
+Max resident set          536870912            536870912            bytes     
+Max processes             64                   64                   processes 
+Max open files            1024                 1024                 files     
+Max locked memory         0                    0                    bytes     
+Max address space         2147483648           2147483648           bytes     
+Max file locks            64                   64                   locks     
+Max pending signals       62793                62793                signals   
+Max msgqueue size         0                    0                    bytes     
+Max nice priority         0                    0                    
+Max realtime priority     0                    0                    
+Max realtime timeout      unlimited            unlimited            us        

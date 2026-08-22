@@ -1,0 +1,6 @@
+/dev/sda2 / ext4 ro,relatime 0 0
+proc /proc proc rw,nosuid,nodev,noexec,relatime 0 0
+sysfs /sys sysfs ro,nosuid,nodev,noexec,relatime 0 0
+tmpfs /tmp tmpfs rw,nosuid,nodev,size=65536k,inode64 0 0
+tmpfs /run tmpfs rw,nosuid,nodev,size=8192k,mode=755,inode64 0 0
+/dev/sdb /work ext4 ro,relatime 0 0

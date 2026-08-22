@@ -1,0 +1,9 @@
+Personalities : [raid1] 
+md0 : active (auto-read-only) raid1 sdb1[1] sda1[0](W)
+      976630464 blocks super 1.2 [2/2] [UU]
+      	resync=PENDING
+
+md127 : inactive sdc1[0](S)
+      976630464 blocks super 1.2
+
+unused devices: <none>

@@ -1,0 +1,1 @@
+A setuid binary mid-flight — the real and effective user ids differ, which is the only place that says so plainly

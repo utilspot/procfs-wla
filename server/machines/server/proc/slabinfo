@@ -1,0 +1,19 @@
+slabinfo - version: 2.1
+# name            <active_objs> <num_objs> <objsize> <objperslab> <pagesperslab> : tunables <limit> <batchcount> <sharedfactor> : slabdata <active_slabs> <num_slabs> <sharedavail>
+nf_conntrack              15552  16200    320   12    1 : tunables  120   60    8 : slabdata   1296   1350      0
+ext4_inode_cache         149051 149800   1096    7    2 : tunables  120   60    8 : slabdata  21293  21400      0
+dentry                   863470 865200    192   21    1 : tunables  120   60    8 : slabdata  41118  41200      0
+inode_cache              105732 106800    632   12    2 : tunables  120   60    8 : slabdata   8811   8900      0
+radix_tree_node           84196  86800    584   14    2 : tunables  120   60    8 : slabdata   6014   6200      0
+buffer_head              710424 717600    104   39    1 : tunables  120   60    8 : slabdata  18216  18400      0
+kmalloc-4k                 4710   5120   4096    8    8 : tunables  120   60    8 : slabdata    589    640      0
+kmalloc-2k                 7056   7840   2048    8    4 : tunables  120   60    8 : slabdata    882    980      0
+kmalloc-1k                 9970  10720   1024    8    2 : tunables  120   60    8 : slabdata   1247   1340      0
+kmalloc-512               15960  16800    512    8    1 : tunables  120   60    8 : slabdata   1995   2100      0
+kmalloc-256               49504  54400    256   16    1 : tunables  120   60    8 : slabdata   3094   3400      0
+task_struct                 385    410   9024    1    4 : tunables  120   60    8 : slabdata    385    410      0
+TCP                         581    660   2432    3    2 : tunables  120   60    8 : slabdata    194    220      0
+sock_inode_cache           2846   3060    832    9    2 : tunables  120   60    8 : slabdata    317    340      0
+skbuff_head_cache         16512  19200    256   16    1 : tunables  120   60    8 : slabdata   1032   1200      0
+bio-1                      5683   7680    256   16    1 : tunables  120   60    8 : slabdata    356    480      0
+scsi_sense_cache           6739   8320    128   32    1 : tunables  120   60    8 : slabdata    211    260      0

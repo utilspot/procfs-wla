@@ -1,0 +1,6 @@
+55a4c1e00000-55a4c1e02000 r--p 00000000 08:02 24383218                   /tmp/two\012lines.so
+55a4c1e02000-55a4c1e07000 r-xp 00002000 08:02 24383218                   /tmp/two\012lines.so
+7f2c4d000000-7f2c4d200000 rw-s 00000000 00:05 98765                      /memfd:shared-buffer (deleted)
+7f2c4d200000-7f2c4d400000 rw-s 00000000 00:01 12345                      /dev/shm/postgres
+7f2c4d400000-7f2c4d401000 rw-p 00000000 00:00 0
+7ffc1b9c0000-7ffc1b9e1000 rw-p 00000000 00:00 0                          [stack]

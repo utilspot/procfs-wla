@@ -1,0 +1,20 @@
+nvidia_drm 77824 8 - Live 0xffffffffc0000000 (POE)
+nvidia_modeset 1224704 3 nvidia_drm, Live 0xffffffffc0021000 (POE)
+nvidia 56717312 43 nvidia_modeset, Live 0xffffffffc0042000 (POE)
+drm_kms_helper 311296 1 nvidia_drm, Live 0xffffffffc0063000
+drm 630784 6 nvidia_drm,drm_kms_helper, Live 0xffffffffc0084000
+snd_hda_intel 53248 5 - Live 0xffffffffc00a5000
+snd_hda_codec 163840 1 snd_hda_intel, Live 0xffffffffc00c6000
+snd_pcm 143360 2 snd_hda_intel,snd_hda_codec, Live 0xffffffffc00e7000
+snd 114688 3 snd_hda_codec,snd_pcm, Live 0xffffffffc0108000
+nf_conntrack 172032 6 nf_nat,xt_conntrack, Live 0xffffffffc0129000
+nf_nat 49152 1 - Live 0xffffffffc014a000
+xt_conntrack 16384 2 - Live 0xffffffffc016b000
+x_tables 57344 2 xt_conntrack, Live 0xffffffffc018c000
+ext4 962560 1 - Live 0xffffffffc01ad000
+mbcache 16384 1 ext4, Live 0xffffffffc01ce000
+jbd2 139264 1 ext4, Live 0xffffffffc01ef000
+nvme 57344 3 - Live 0xffffffffc0210000
+nvme_core 147456 1 nvme, Live 0xffffffffc0231000
+usbhid 65536 0 - Live 0xffffffffc0252000
+btusb 65536 0 - Live 0xffffffffc0273000

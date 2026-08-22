@@ -1,0 +1,24 @@
+MemTotal:        2039352 kB
+MemFree:          108224 kB
+MemAvailable:     402188 kB
+Buffers:           24480 kB
+Cached:           484220 kB
+SwapCached:        88320 kB
+Active:           812440 kB
+Inactive:         604880 kB
+SwapTotal:       2097148 kB
+SwapFree:         620148 kB
+Dirty:               448 kB
+Writeback:             0 kB
+AnonPages:       1004880 kB
+Mapped:           204884 kB
+Shmem:             12440 kB
+KReclaimable:      88240 kB
+Slab:             148220 kB
+SReclaimable:      88240 kB
+SUnreclaim:        59980 kB
+CommitLimit:     3116824 kB
+Committed_AS:    4204880 kB
+HugePages_Total:        0
+HugePages_Free:         0
+Hugepagesize:       2048 kB

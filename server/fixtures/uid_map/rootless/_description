@@ -1,0 +1,1 @@
+A rootless container — uid 0 inside is an ordinary user outside, with a subuid range behind it

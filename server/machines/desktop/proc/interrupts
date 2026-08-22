@@ -1,0 +1,22 @@
+                  CPU0       CPU1       CPU2       CPU3
+  0:         33          0          0          0   IO-APIC   2-edge      timer
+  1:          9          0          0          0   IO-APIC   1-edge      i8042
+  8:          0          1          0          0   IO-APIC   8-edge      rtc0
+  9:          0          0          0          0   IO-APIC   9-fasteoi   acpi
+ 12:        156          0          0          0   IO-APIC  12-edge      i8042
+ 16:          0          0          0          0   IO-APIC  16-fasteoi   i801_smbus
+120:          0          0          0          0   PCI-MSI 327680-edge      xhci_hcd
+121:      12847      13102      12994      13011   PCI-MSI 32768-edge      nvme0q0
+122:     284719         12          8          4   PCI-MSI 524288-edge      i915
+123:      18472      18391      18402      18377   PCI-MSI 1048576-edge      snd_hda_intel
+NMI:          0          0          0          0   Non-maskable interrupts
+LOC:    1284736    1293841    1287412    1290183   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:          0          0          0          0   Performance monitoring interrupts
+RES:     284719     287412     286103     285941   Rescheduling interrupts
+CAL:      18472      18391      18402      18377   Function call interrupts
+TLB:      92841      93012      92904      92871   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+MCE:          0          0          0          0   Machine check exceptions
+ERR:          0
+MIS:          0

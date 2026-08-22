@@ -1,0 +1,16 @@
+major minor  #blocks  name
+
+   8        0  976562500 sda
+   8        1  488281250 sda1
+   7        0     131072 loop0
+   7        8      75776 loop1
+   7       16      94208 loop2
+   7       24      65536 loop3
+   7       32      56320 loop4
+   7       40      41984 loop5
+   7       48     131072 loop6
+   7       56      75776 loop7
+   7       64      94208 loop8
+   7       72      65536 loop9
+   7       80      12288 loop10
+   7       88          0 loop11

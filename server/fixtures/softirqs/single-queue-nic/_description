@@ -1,0 +1,1 @@
+Single-queue NIC — every packet landing on CPU0, which no other CPU can share

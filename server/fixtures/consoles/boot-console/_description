@@ -1,0 +1,1 @@
+Early boot console still registered — the 8250 boot console has not been handed over, and has no device number

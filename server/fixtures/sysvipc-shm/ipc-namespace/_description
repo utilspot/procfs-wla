@@ -1,0 +1,1 @@
+An IPC namespace shared with the host, read from inside — creator pids that are 0 because they are not visible here, and an owner with no mapping

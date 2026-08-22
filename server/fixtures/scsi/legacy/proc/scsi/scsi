@@ -1,0 +1,16 @@
+Attached devices:
+Host: scsi0 Channel: 00 Id: 00 Lun: 00
+  Vendor: IBM      Model: DDRS-34560D      Rev: DC1B
+  Type:   Direct-Access                    ANSI  SCSI revision: 02
+Host: scsi0 Channel: 00 Id: 02 Lun: 00
+  Vendor: QUANTUM  Model: XP34550W         Rev: LXY4
+  Type:   Direct-Access                    ANSI  SCSI revision: 01 CCS
+Host: scsi0 Channel: 00 Id: 04 Lun: 00
+  Vendor: ARCHIVE  Model: Python 04106-XX  Rev: 7350
+  Type:   Sequential-Access                ANSI  SCSI revision: 02
+Host: scsi0 Channel: 00 Id: 05 Lun: 00
+  Vendor: HP       Model: C1750A           Rev: 3226
+  Type:   Scanner                          ANSI  SCSI revision: 02
+Host: scsi0 Channel: 00 Id: 06 Lun: 00
+  Vendor: ESG-SHV  Model: SCA HSBP M17     Rev: 0.05
+  Type:   Processor                        ANSI  SCSI revision: 02

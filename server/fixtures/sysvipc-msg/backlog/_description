@@ -1,0 +1,1 @@
+A queue at the 16 KiB msgmnb allows — full, so every further msgsnd blocks — beside one nearly there

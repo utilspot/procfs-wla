@@ -1,0 +1,1 @@
+BOOT_IMAGE=/vmlinuz-5.15.0-91-generic root=/dev/mapper/vg0-root ro console=tty0 console=ttyS0,115200n8 net.ifnames=0 biosdevname=0 crashkernel=512M-:192M nvme_core.io_timeout=4294967295 audit=1 numa_balancing=disable

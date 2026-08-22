@@ -1,0 +1,7 @@
+0-0	Linux           	[kernel]
+1-1	SVR4            	[abi_svr4]
+2-2	SVR3            	[abi_ibcs]
+3-3	SCO OpenServer  	[abi_sco]
+5-5	Interactive UNIX	[abi_isc]
+13-13	Solaris         	[abi_solaris]
+14-14	UnixWare 7      	[abi_uw7]

@@ -1,0 +1,6 @@
+05c1a2b3 I--Q---     4 perm 3f030000  1000  1000 keyring   _ses: 3
+11d4e5f6 I--Q---     2   9h 3f010000  1000  1000 keyring   _krb.user: 2
+1244aa01 I--Q---     1   9h 3f3f0000  1000  1000 user      krb5_ccache: 1024
+1244aa02 I--Q---     1  43m 3f3f0000  1000  1000 user      krb5_tkt_http: 620
+1244aa03 I--Q---     1   7d 3f1f0000  1000  1000 logon     afs:cell.example: 48
+1244aa04 I--Q---     1   2w 3f1f0000  1000  1000 big_key   blob.cache: 65536

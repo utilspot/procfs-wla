@@ -1,0 +1,1 @@
+BOOT_IMAGE=/boot/vmlinuz-6.6.13 root=/dev/sda2 rw dyndbg="module nvme +p" loglevel=7 systemd.log_level=debug -- --system --unit=rescue.target

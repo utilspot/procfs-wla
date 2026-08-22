@@ -1,0 +1,32 @@
+name         : sha256
+driver       : sha256-generic
+module       : kernel
+priority     : 100
+refcnt       : 2
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 64
+digestsize   : 32
+
+name         : sha1
+driver       : sha1-generic
+module       : kernel
+priority     : 100
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 64
+digestsize   : 20
+
+name         : crc32c
+driver       : crc32c-generic
+module       : kernel
+priority     : 100
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 1
+digestsize   : 4

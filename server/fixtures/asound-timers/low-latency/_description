@@ -1,0 +1,1 @@
+A workstation at a 64-frame period, with the sequencer and an application both holding the hrtimer open and running

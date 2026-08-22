@@ -1,0 +1,10 @@
+node_modules/
+build/
+dist/
+.vscode
+.env
+.env.local
+*.local
+*.tsbuildinfo
+.DS_Store
+CMakeLists.txt.user*

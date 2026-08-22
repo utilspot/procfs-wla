@@ -1,0 +1,57 @@
+Name:	nginx
+Umask:	0022
+State:	S (sleeping)
+Tgid:	5150
+Ngid:	0
+Pid:	5150
+PPid:	3390
+TracerPid:	0
+Uid:	0	101	101	101
+Gid:	0	101	101	101
+FDSize:	256
+Groups:	0 
+NStgid:	5150	14
+NSpid:	5150	14
+NSpgid:	5150	14
+NSsid:	5150	14
+VmPeak:	   14172 kB
+VmSize:	   14172 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	    5568 kB
+VmRSS:	    5568 kB
+RssAnon:	    1572 kB
+RssFile:	    3996 kB
+RssShmem:	       0 kB
+VmData:	    1400 kB
+VmStk:	     132 kB
+VmExe:	     760 kB
+VmLib:	    2400 kB
+VmPTE:	      60 kB
+VmSwap:	       0 kB
+HugetlbPages:	       0 kB
+CoreDumping:	0
+THP_enabled:	1
+Threads:	4
+SigQ:	0/62793
+SigPnd:	0000000000000000
+ShdPnd:	0000000000000000
+SigBlk:	0000000000000000
+SigIgn:	0000000000000003
+SigCgt:	0000000000016a07
+CapInh:	0000000000000000
+CapPrm:	0000000000000400
+CapEff:	0000000000000400
+CapBnd:	00000000a80425fb
+CapAmb:	0000000000000400
+NoNewPrivs:	1
+Seccomp:	2
+Seccomp_filters:	1
+Speculation_Store_Bypass:	thread vulnerable
+SpeculationIndirectBranch:	conditional enabled
+Cpus_allowed:	ffffffff,ffffffff,ffffffff,ffffffff
+Cpus_allowed_list:	0-127
+Mems_allowed:	00000000,00000001
+Mems_allowed_list:	0
+voluntary_ctxt_switches:	88214
+nonvoluntary_ctxt_switches:	412

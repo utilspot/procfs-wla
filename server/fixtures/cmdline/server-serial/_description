@@ -1,0 +1,1 @@
+Serial-console server — console given twice, so the kernel takes the last, plus LVM root and crashkernel

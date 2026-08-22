@@ -1,0 +1,12 @@
+31 2 8:2 / / rw,relatime shared:1 - ext4 /dev/sda2 rw
+26 31 0:23 / /sys rw,nosuid,nodev,noexec,relatime shared:7 - sysfs sysfs rw
+27 31 0:24 / /proc rw,nosuid,nodev,noexec,relatime shared:12 - proc proc rw
+30 31 0:26 / /run rw,nosuid,nodev,noexec,relatime shared:5 - tmpfs tmpfs rw,size=1218792k,mode=755,inode64
+58 31 8:16 / /srv rw,relatime shared:44 - ext4 /dev/sdb rw
+59 58 8:16 /srv/www /var/www ro,relatime shared:45 - ext4 /dev/sdb rw
+60 59 8:16 /srv/www/uploads /var/www/uploads rw,relatime shared:46 - ext4 /dev/sdb rw
+61 31 8:2 /var/lib/postgresql /mnt/pgdata rw,relatime shared:47 - ext4 /dev/sda2 rw
+62 31 0:26 /credentials /etc/credentials ro,nosuid,nodev,relatime master:5 - tmpfs tmpfs rw,size=1218792k,mode=755,inode64
+63 31 8:2 /home/build /build rw,relatime - ext4 /dev/sda2 rw
+64 63 0:64 / /build/cache rw,relatime unbindable - tmpfs tmpfs rw,size=4194304k,inode64
+65 31 8:2 /var/log/journal /var/log/journal rw,relatime shared:48 propagate_from:1 - ext4 /dev/sda2 rw

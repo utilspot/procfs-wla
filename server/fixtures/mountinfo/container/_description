@@ -1,0 +1,1 @@
+Pid 1 inside a Docker container — an overlay root, the host’s files bound in one at a time, and the masked entries under /proc that hide the machine from it

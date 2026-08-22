@@ -1,0 +1,1 @@
+BOOT_IMAGE=/boot/vmlinuz-6.8.0-45-generic root=UUID=1b9f3a7c-5d2e-4f81-9a6b-0c3d8e7f2a41 ro single init=/bin/bash mitigations=off nokaslr selinux=0 module.sig_enforce=0

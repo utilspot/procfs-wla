@@ -1,0 +1,1 @@
+An NVMe machine: the header alone, since nothing the SCSI stack owns is attached and an NVMe disk never is

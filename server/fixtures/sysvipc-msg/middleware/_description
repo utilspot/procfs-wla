@@ -1,0 +1,1 @@
+A legacy middleware host — a queue per worker, one holding 12 KiB of unread messages, and one whose own limit was raised past msgmnb

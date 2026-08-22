@@ -1,0 +1,6310 @@
+/*
+ * The stylesheet for this app: every rule every page uses, in one file.
+ *
+ * It is the only one there is. Every document links it — see
+ * `config/stylesheet.ts`, which emits it once for the whole build as
+ * `dist/common-<hash>.css` and writes the link into each page — so a reader
+ * moving between pages fetches it on the first and has it for the rest, and
+ * `dist/` carries one stylesheet rather than one per page.
+ *
+ * It reads in two parts. First what every page is built out of: the colour
+ * tokens, the shell a page sits in, the path at its top, and the cards, tables,
+ * chips and notices the views are assembled from. Then, under a heading each,
+ * the rules that belong to one page alone — of which there are far more, since
+ * most of what a page shows is a table shaped like nothing else here.
+ */
+
+/* ---- what every page uses ---- */
+
+:root {
+  --bg: #0f1216;
+  --surface: #171b21;
+  --surface-2: #1e242c;
+  --border: #2a323c;
+  --text: #e6eaf0;
+  --muted: #8d99a8;
+  --accent: #5aa9ff;
+  --warn: #ffb454;
+  --danger: #ff6b6b;
+
+  color-scheme: dark;
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --surface-2: #f0f2f5;
+    --border: #dde1e7;
+    --text: #16191d;
+    --muted: #667081;
+    --accent: #0b62d0;
+    --warn: #9a5c00;
+    --danger: #c0392b;
+
+    color-scheme: light;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+code,
+pre,
+.chip,
+.cpu-card__fields td {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+/* A column tall enough to fill the window even when the page is short, so the
+   footer sits at the bottom of the screen rather than partway up it — a page
+   with one line on it looks unfinished otherwise. `main` takes the slack, so
+   the footer is pushed down rather than lifted away from the content by a
+   margin, and a page with more than a screenful just grows past it. `100dvh`
+   because a phone's toolbars slide in and out of the viewport, and `box-sizing:
+   border-box` above is what keeps the padding inside the height rather than a
+   screenful plus 5rem of scroll. */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+
+.app > main {
+  flex: 1;
+}
+
+.app__header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.app__header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/*
+ * The path at the top of a page, which is also the way back up it. It stays
+ * one string — the separators are the path's own — so the heading still reads
+ * as the file it names; only the steps above the last are links.
+ */
+.app__path code {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  word-break: break-all;
+}
+
+/* The slashes, which belong to neither step they sit between. Dimmed so the
+   names carry the path and the punctuation stays out of the way. */
+.app__path-separator {
+  color: var(--muted);
+}
+
+/* A directory above this one — its name alone, the way a link reads anywhere
+   else. Never underlined: at heading size a rule under one segment of a path
+   reads as decoration rather than as a link, so colour carries it instead. */
+.app__path-up {
+  color: inherit;
+  text-decoration: none;
+  border-radius: 3px;
+}
+
+.app__path-up:hover,
+.app__path-up:focus-visible {
+  color: var(--accent);
+}
+
+/* The focus ring stays: a keyboard has no hover to show it where it is. */
+.app__path-up:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* Where the reader already is, so it goes nowhere and says so by weight. */
+.app__path-here {
+  font-weight: 600;
+}
+
+/*
+ * The way out of the app altogether, shown only where it is served below the
+ * root of its server.
+ *
+ * It is set in the path's own font so that it sits on the line as one of its
+ * kind, and drawn as a button — the surface, border and radius the buttons in
+ * this header already use — because it is not a step of the path and should not
+ * read as one. The path is what the `code` beside it spells; this is a way out
+ * of it.
+ *
+ * Set at the path's own size, so the two sit on the line as one thing and the
+ * button's baseline is the path's baseline with no nudging.
+ */
+.app__path-home {
+  display: inline-block;
+  margin-right: 0.7rem;
+  padding: 0.15rem 0.55rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 1em;
+  text-decoration: none;
+}
+
+.app__path-home:hover,
+.app__path-home:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.app__path-home:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.source {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: flex-end;
+}
+
+.button,
+.segmented button {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.7rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.button:not(:disabled):hover {
+  border-color: var(--accent);
+}
+
+.segmented {
+  display: flex;
+}
+
+.segmented button {
+  border-radius: 0;
+}
+
+.segmented button:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.segmented button:last-child {
+  border-radius: 0 6px 6px 0;
+  border-left: none;
+}
+
+.segmented button[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+main {
+  margin-top: 1.5rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.notice {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.notice--error {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.notice--warn {
+  border-color: var(--warn);
+  color: var(--warn);
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/*
+ * The summary tiles, the chip row under them and the cards all carry no
+ * margins of their own, so any two of them in a row sat flush together. Pages
+ * that put a filter row or a paragraph in between were spaced only because
+ * those bring margins with them; this is the same 1rem in every order —
+ * loadavg leads with a card and puts its tiles underneath.
+ *
+ * The last three are the card grids, which sit where a single card otherwise
+ * would: one card per array, per section, per boot-config block.
+ */
+.summary + .card,
+.models + .card,
+.card + .summary,
+.summary + .md__arrays,
+.models + .md__arrays,
+.models + .devices,
+.models + .boot {
+  margin-top: 1rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  min-width: 8rem;
+  padding: 0.8rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.stat__value {
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.stat__label {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.models {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1rem 0 0;
+}
+
+.machine {
+  margin-top: 1rem;
+}
+
+.machine h3 {
+  margin: 0 0 0.6rem;
+  font-size: 0.95rem;
+}
+
+.cpu-card__fields {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin-top: 0.6rem;
+}
+
+.cpu-card__fields th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 0.18rem 0.75rem 0.18rem 0;
+  white-space: nowrap;
+  vertical-align: top;
+  width: 1%;
+}
+
+.cpu-card__fields td {
+  padding: 0.18rem 0;
+  word-break: break-word;
+}
+
+.count {
+  color: var(--text);
+  background: var(--surface-2);
+  border-radius: 999px;
+  padding: 0.05rem 0.4rem;
+  font-size: 0.72rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chip {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.75rem;
+}
+
+.chip--bug {
+  border-color: color-mix(in srgb, var(--danger) 45%, var(--border));
+  color: var(--danger);
+}
+
+/* Something the reader should look twice at, where `--bug` is something wrong. */
+.chip--warn {
+  border-color: color-mix(in srgb, var(--warn) 45%, var(--border));
+  color: var(--warn);
+}
+
+.chip--model {
+  font-size: 0.82rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.chip--flag {
+  font-size: 0.82rem;
+  padding: 0.25rem 0.5rem;
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  color: var(--accent);
+}
+
+.cpus__segment--user {
+  background: var(--accent);
+}
+
+.cpus__segment--nice {
+  background: color-mix(in srgb, var(--accent) 55%, var(--surface-2));
+}
+
+.cpus__segment--system {
+  background: var(--warn);
+}
+
+.cpus__segment--irq,
+.cpus__segment--softirq {
+  background: color-mix(in srgb, var(--warn) 55%, var(--surface-2));
+}
+
+.cpus__segment--iowait {
+  background: var(--danger);
+}
+
+.cpus__segment--steal {
+  background: color-mix(in srgb, var(--danger) 60%, var(--surface-2));
+}
+
+.cpus__segment--idle {
+  background: transparent;
+}
+
+/* The two sections sit side by side where there is room for them. */
+.devices {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  align-items: start;
+}
+
+.cmdline__row--overridden .chip {
+  text-decoration: none;
+}
+
+/* A column per CPU, so this table is the one that can outgrow the page. */
+.irq {
+  overflow-x: auto;
+}
+
+.sched__domains .chip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* One card per top-level section, side by side where there is room. */
+.boot {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  align-items: start;
+}
+
+/* A column per order on top of the fixed ones, so this table can outgrow the page. */
+.buddy {
+  overflow-x: auto;
+}
+
+/* Low orders warm, high orders cool: a bar that reads warm is fragmented. */
+.buddy__segment--0 { background: var(--danger); }
+
+.buddy__segment--1 { background: color-mix(in srgb, var(--danger) 75%, var(--warn)); }
+
+.buddy__segment--2 { background: var(--warn); }
+
+.buddy__segment--3 { background: color-mix(in srgb, var(--warn) 70%, var(--accent)); }
+
+.buddy__segment--4 { background: color-mix(in srgb, var(--warn) 50%, var(--accent)); }
+
+.buddy__segment--5 { background: color-mix(in srgb, var(--warn) 30%, var(--accent)); }
+
+.buddy__segment--6 { background: color-mix(in srgb, var(--accent) 80%, var(--surface-2)); }
+
+.buddy__segment--7 { background: color-mix(in srgb, var(--accent) 85%, var(--surface-2)); }
+
+.buddy__segment--8 { background: color-mix(in srgb, var(--accent) 90%, var(--surface-2)); }
+
+.buddy__segment--9 { background: color-mix(in srgb, var(--accent) 95%, var(--surface-2)); }
+
+.buddy__segment--10 { background: var(--accent); }
+
+/*
+ * Cells whose text is followed by one or more chips — a name and its badge.
+ * Without this the two sit flush against each other, since a chip carries
+ * padding but no margin.
+ *
+ * Spaced with a margin rather than by making the cell a flex container:
+ * `display: flex` on a `<td>` takes it out of table-cell layout, so its
+ * contents stop sharing a baseline with the plain cells beside it and the row
+ * reads a couple of pixels out of line. A margin leaves the table alone.
+ */
+.cons__name > .chip,
+.tty__name > .chip,
+.ldisc__name > .chip,
+.cg__name > .chip,
+.crypto__name > .chip,
+.crypto__driver > .chip,
+.modules__name > .chip,
+.slabs__name > .chip,
+.devices__major > .chip,
+.cmdline__value > .chip {
+  margin-left: 0.35rem;
+  /*
+   * These cells set `word-break: break-all` so a long driver or module name
+   * wraps inside its column — and that inherits into the badge, splitting
+   * `accel` into `a` / `ccel`. A badge is a label, not prose: it never breaks.
+   */
+  word-break: normal;
+  white-space: nowrap;
+}
+
+.dma__device > .chip {
+  margin-left: 0.35rem;
+  word-break: normal;
+  white-space: nowrap;
+}
+
+.fb__name > .chip {
+  margin-left: 0.35rem;
+  word-break: normal;
+  white-space: nowrap;
+}
+
+.fs__name > .chip {
+  margin-left: 0.35rem;
+  word-break: normal;
+  white-space: nowrap;
+}
+
+/* The type letter is a token out of the file, and its case carries meaning. */
+.ksym__type > .chip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.keys__type > .chip {
+  margin-left: 0.35rem;
+  word-break: normal;
+  white-space: nowrap;
+}
+
+/* The four bytes of the mask, kept in one row so they read as a set. */
+.keys__perms > .chips {
+  flex-wrap: nowrap;
+}
+
+.keys__perms .chip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.02em;
+}
+
+.kusers__uid > .chip {
+  margin-left: 0.35rem;
+  white-space: nowrap;
+}
+
+.lat__site > .chip {
+  margin-left: 0.35rem;
+  word-break: normal;
+  white-space: nowrap;
+}
+
+/* The frames above the sleep, in order, so the path stays readable. */
+.lat__path .chips {
+  gap: 0.25rem;
+}
+
+.lat__path .chip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+/*
+ * The whole file is three numbers, so they are the page rather than a row in a
+ * table — laid out across the card with the trend beside them.
+ */
+.load {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.load__trend--rising {
+  border-color: color-mix(in srgb, var(--warn) 45%, var(--border));
+  color: var(--warn);
+}
+
+.load__trend--falling {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  color: var(--accent);
+}
+
+.locks__kind .chip,
+.locks__state .chip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/*
+ * A record here is several lines rather than a row, so each array is a card of
+ * its own — side by side where the page is wide enough for two.
+ */
+.md__arrays {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  align-items: start;
+}
+
+.md__members .chip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.mem__segment--used {
+  background: var(--accent);
+}
+
+/* Given back the moment something needs it, so it is not drawn as in use. */
+.mem__segment--cache {
+  background: color-mix(in srgb, var(--accent) 35%, var(--surface-2));
+}
+
+.mem__segment--free {
+  background: transparent;
+}
+
+.mem__swatch--used {
+  background: var(--accent);
+}
+
+.mem__swatch--cache {
+  background: color-mix(in srgb, var(--accent) 35%, var(--surface-2));
+}
+
+.mem__swatch--free {
+  background: var(--surface-2);
+}
+
+.vs__heading .muted {
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+
+.link-button {
+  margin-top: 0.5rem;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.raw {
+  margin: 0;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  white-space: pre;
+}
+
+.app__footer {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+}
+
+/* The footer every page carries — see `components/SiteFooter.tsx`. One row:
+   the copyright and the source at the left, what this page has of its own at
+   the right, and on a narrow screen the two stack rather than crowd. The
+   modifier is what keeps this off the admin page's status line, which wears the
+   plain `.app__footer` and is a paragraph rather than a row. */
+.app__footer--site {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.75rem;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+/* Muted like the line it sits in, so the footer stays one quiet strip; the
+   colour and the underline arrive on hover, where the pointer already is. */
+.app__footer--site a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app__footer--site a:hover,
+.app__footer--site a:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* Admin page (debug builds only) */
+
+.badge {
+  align-self: center;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--warn);
+  border-radius: 999px;
+  color: var(--warn);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* One button per machine. A card that is pressed rather than a radio: there is
+   one choice here and taking it is the whole interaction. */
+.admin__machine {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.admin__machine:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+}
+
+.admin__machine:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.chip--live {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Mounts page */
+
+.mounts__filter {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 1rem 0 0.75rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.mounts__filter input {
+  accent-color: var(--accent);
+}
+
+.mounts {
+  padding: 0;
+  overflow-x: auto;
+}
+
+.mounts__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.mounts__table th {
+  position: sticky;
+  top: 0;
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.mounts__table td {
+  padding: 0.45rem 0.75rem;
+  border-top: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.mounts__row--pseudo .mounts__point,
+.mounts__row--pseudo .mounts__device {
+  color: var(--muted);
+}
+
+.mounts__point {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.mounts__device {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  word-break: break-all;
+  max-width: 22ch;
+}
+
+.mounts__options {
+  min-width: 16rem;
+}
+
+.chip--type {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  color: var(--accent);
+}
+
+.chip--ro {
+  border-color: color-mix(in srgb, var(--warn) 50%, var(--border));
+  color: var(--warn);
+  font-weight: 500;
+}
+
+/* Diskstats page */
+
+.disks__note {
+  display: block;
+  max-width: 70ch;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+/* Outranks `.mounts__table td`, whose padding shorthand would win otherwise. */
+.mounts__table td.disks__device--part {
+  padding-left: 1.9rem;
+  font-weight: 400;
+}
+
+/*
+ * The listing of a directory under /proc, on the page the base path lands on:
+ * a tile per entry, the way a file manager shows one. A section per kind, and
+ * the processes in their own — on a real machine they are hundreds of numbered
+ * directories, and the files anyone came to read would be lost among them.
+ */
+.explorer + .explorer {
+  margin-top: 1.5rem;
+}
+
+.explorer__title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0 0 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* The count sits with the heading rather than in a tile of its own. */
+.explorer__count {
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.explorer__count::before {
+  content: '(';
+}
+
+.explorer__count::after {
+  content: ')';
+}
+
+.explorer__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tile {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+/* The anchor fills the tile, so the whole tile is the click target. */
+.tile__link,
+.tile--dead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  height: 100%;
+  padding: 0.85rem 0.6rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.tile__link:hover,
+.tile__link:focus-visible {
+  border-radius: 10px;
+  background: var(--surface-2);
+  outline-offset: -1px;
+}
+
+.tile:has(.tile__link:hover) {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+/* A directory with no listing of its own is shown as the dead end it is. */
+.tile--dead {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.tile__icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--muted);
+  flex: none;
+}
+
+/* A folder reads as a folder before the name is read at all. */
+.tile--directory .tile__icon {
+  color: var(--accent);
+}
+
+.tile__name {
+  font-family: ui-mono, ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+/*
+ * The processes, laid out as bare rows rather than squares: a pid is four or
+ * five characters, so a square tile around one is mostly empty space — and
+ * there are hundreds of them. They carry no icon either; the heading over the
+ * section says what they all are.
+ *
+ * 6rem is what a row needs without one: 0.9rem of padding and a name of up to
+ * seven digits, which is every pid a 64-bit kernel hands out. At the 1200px the
+ * page is at its widest that is eleven columns rather than the ten an icon left
+ * room for — a hundred pids in nine rows instead of ten.
+ */
+.explorer__grid--compact {
+  grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+  gap: 0.4rem;
+}
+
+.explorer__grid--compact .tile__link,
+.explorer__grid--compact .tile--dead {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  padding: 0.45rem 0.6rem;
+}
+
+/* One line, ellipsised: the tiles stay on a grid whatever the name is. */
+.explorer__grid--compact .tile__name {
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+/*
+ * The chips sit *inside* the cells rather than turning the cells into flex
+ * containers. A `display: flex` on a `td` is no longer a table cell at all, and
+ * two of them side by side are wrapped in one anonymous cell between them —
+ * which stacks the two columns and shifts every column after them one to the
+ * left.
+ */
+.arp__hw .chip,
+.arp__flagcell .chip {
+  display: inline-block;
+  margin-left: 0.35rem;
+  white-space: nowrap;
+}
+
+.conn__name .chip {
+  display: inline-block;
+  margin-left: 0.35rem;
+}
+
+.netdev__name .chip {
+  display: inline-block;
+  margin-left: 0.35rem;
+  font-weight: 400;
+}
+
+/* ---- admin ---- */
+
+.admin__lead {
+  margin: 0 0 1.25rem;
+  max-width: 60ch;
+  line-height: 1.5;
+}
+
+.admin__machines {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+}
+
+.admin__machine--selected {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+
+.admin__machine-name {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+/* Which one is being served, said on the button rather than beside it. */
+.admin__machine-mark {
+  margin-left: auto;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.admin__machine-description {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* ---- asound/cards ---- */
+
+/* ALSA cards page: a row per card, but the file's record is two lines — the
+   long name goes under the short one in the same cell, which is where the file
+   itself puts it. */
+
+.asndc__id,
+.asndc__driver {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: baseline;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.asndc__id {
+  font-weight: 600;
+}
+
+.asndc__driver {
+  color: var(--muted);
+}
+
+.asndc__table th:first-child,
+.asndc__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The two human names, stacked as the file stacks them. */
+.asndc__names {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.asndc__short {
+  font-size: 0.82rem;
+}
+
+.asndc__long {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* Both ways of naming the card, the word above the number it does not depend
+   on. */
+.asndc__open {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* Cards whose short names collide, which is what forces a suffixed id. */
+.asndc__row--collides .asndc__id {
+  color: var(--warn);
+}
+
+/* ---- asound/devices ---- */
+
+/* ALSA devices page: a row per registered character device, the minor on the
+   left and the node it becomes on the right — the two ends of what the file
+   maps between. */
+
+.asndd__owner {
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.asndd__type {
+  font-size: 0.8rem;
+}
+
+.asndd__table th:first-child,
+.asndd__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The note is prose, and the widest thing in the row. */
+.asndd__note {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.asndd__node {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+/* The core's own two, which belong to no card and are there on every machine
+   with ALSA loaded. */
+.asndd__row--global .asndd__number,
+.asndd__row--global .asndd__node {
+  color: var(--muted);
+}
+
+/* ---- asound/modules ---- */
+
+/* ALSA modules page: a row per card, the slot on the left because that is the
+   number every other ALSA name is built from. */
+
+.asndm__module {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: baseline;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.asndm__table th:first-child,
+.asndm__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The note is prose, so it takes what the columns around it leave. */
+.asndm__note {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.asndm__device {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Two cards under one module: the pair slots= cannot pin apart. */
+.asndm__row--shared .asndm__number {
+  color: var(--warn);
+}
+
+/* ---- asound/pcm ---- */
+
+/* PCM devices page: a row per device, with the two names beside each other —
+   they are separate fields and often the same string, so the id is dimmed and
+   the name carries the row. */
+
+.asndp__address {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.asndp__id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.asndp__name {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: baseline;
+  font-size: 0.82rem;
+}
+
+.asndp__table th:nth-child(4),
+.asndp__table th:nth-child(5),
+.asndp__table th:last-child,
+.asndp__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The timer lines a device's substreams have, which are an aside rather than
+   a number: monospace to read as the ids they are, and dimmed. */
+.asndp__timers {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* A device that takes more than one opener at a time, which is the card doing
+   the mixing rather than a sound server. */
+.asndp__row--multi .asndp__address {
+  color: var(--accent);
+}
+
+/* ---- asound/timers ---- */
+
+/* ALSA timers page: a row per timer, with the clients holding it open in the
+   last cell rather than in rows of their own — the file indents them under
+   their timer, and a nested row would break the columns they have nothing to
+   do with. */
+
+.asndt__id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.asndt__class {
+  font-size: 0.78rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.asndt__name {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: baseline;
+  font-size: 0.82rem;
+}
+
+.asndt__table th:nth-child(4),
+.asndt__table th:nth-child(5),
+.asndt__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.asndt__flags,
+.asndt__clients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+/* A client that has started the timer, as against one merely holding it open. */
+.asndt__client--running {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* A substream with a stream configured on it: the only rows here that are
+   about something happening now rather than something registered. */
+.asndt__row--configured .asndt__id {
+  color: var(--accent);
+}
+
+/* ---- asound/version ---- */
+
+/* ALSA version page: the one line taken apart, a row per piece — the same
+   three columns the version_signature page uses, since both pages are one
+   line of a file read a field at a time. */
+
+.asnd__label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.asnd__value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* The banner is the widest value in the table and the one thing in it that is
+   the same on every machine, so it is dimmed out of the way of the version
+   under it rather than given the same weight. */
+.asnd__row:first-child .asnd__value {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* The explanation is prose, so it takes what the other two leave. */
+.asnd__note {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* ---- bootconfig ---- */
+
+.boot__section h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+}
+
+.boot__key,
+.boot__value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.boot__key {
+  width: 45%;
+}
+
+/* The dots are structure, so they are dimmed against the segments. */
+.boot__dot {
+  color: var(--muted);
+}
+
+/* ---- buddyinfo ---- */
+
+.buddy__zone {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.buddy__node,
+.buddy__order {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.buddy__table th:not(:first-child):not(:nth-child(4)),
+.buddy__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.buddy__count {
+  font-size: 0.75rem;
+}
+
+.buddy__bar-cell {
+  width: 22%;
+  min-width: 7rem;
+}
+
+/* One segment per order, weighted by the memory it holds rather than by count. */
+.buddy__bar {
+  display: flex;
+  width: 100%;
+  height: 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.buddy__segment {
+  height: 100%;
+}
+
+.buddy__row--fragmented .buddy__zone {
+  color: var(--danger);
+}
+
+/* ---- cgroups ---- */
+
+.cg__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.cg__table th:nth-child(2),
+.cg__table th:nth-child(4),
+.cg__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cg__mounted {
+  width: 30%;
+}
+
+.cg__bar-cell {
+  width: 18%;
+  min-width: 5rem;
+}
+
+.cg__bar {
+  display: block;
+  width: 100%;
+  height: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.cg__segment {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+/* Compiled in but switched off, so it cannot be used at all. */
+.cg__row--disabled .cg__name,
+.cg__row--disabled .cg__number {
+  opacity: 0.55;
+}
+
+/* ---- cmdline ---- */
+
+/*
+ * Clear space under "Booted with", so that what follows reads as a separate
+ * thing rather than as more of it. Above the line the page answers "what is
+ * this machine"; below it, the parameters one by one — and a 1rem gap, which is
+ * what everything else here sits at, made the two look like one list.
+ *
+ * The gap is put *below* this card rather than above the table, because what
+ * comes between them varies: the module chips and the filter are there only on
+ * a line that configures a module, and the space should follow the summary
+ * either way. Adjacent margins collapse, so this sets the gap rather than
+ * adding to whichever one comes next.
+ */
+.cmdline__boot {
+  margin-bottom: 2rem;
+}
+
+.cmdline__key,
+.cmdline__value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.cmdline__key {
+  width: 40%;
+}
+
+/* The module half of a dotted key, dimmed so the parameter name leads. */
+.cmdline__module {
+  color: var(--muted);
+}
+
+/* A parameter given again later: the kernel acts on the last one. */
+.cmdline__row--overridden .cmdline__key,
+.cmdline__row--overridden .cmdline__value {
+  opacity: 0.55;
+  text-decoration: line-through;
+  text-decoration-color: var(--muted);
+}
+
+/* ---- consoles ---- */
+
+.cons__name,
+.cons__device {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+/* The device number is a pair that should never break across lines. */
+.cons__device {
+  white-space: nowrap;
+}
+
+.cons__device {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.cons__table th:nth-child(2) {
+  text-align: right;
+}
+
+.cons__ops {
+  width: 9rem;
+}
+
+/* An operation the driver does not implement, kept in place so the three
+   positions still read as a set rather than collapsing. */
+.cons__op--off {
+  border-style: dashed;
+  color: var(--muted);
+}
+
+/* Registered but not enabled: listed, and receiving nothing. */
+.cons__row--disabled .cons__name,
+.cons__row--disabled .cons__device {
+  opacity: 0.55;
+}
+
+/* ---- crypto ---- */
+
+.crypto__name,
+.crypto__driver {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.crypto__driver {
+  color: var(--muted);
+  word-break: break-all;
+}
+
+.crypto__module {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.crypto__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.crypto__table th:nth-child(4) {
+  text-align: right;
+}
+
+/* Internal algorithms are building blocks the kernel wires together itself,
+   so they are dimmed like the pseudo-filesystems and idle disks elsewhere. */
+.crypto__row--internal .crypto__name,
+.crypto__row--internal .crypto__driver {
+  opacity: 0.6;
+}
+
+/* ---- devices ---- */
+
+.devices__section h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.devices__table {
+  table-layout: fixed;
+}
+
+.devices__major {
+  width: 5.5rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.devices__table th:first-child {
+  text-align: right;
+}
+
+/* ---- diskstats ---- */
+
+.disks__table th:not(:first-child),
+.disks__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.disks__device {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-weight: 600;
+}
+
+.disks__devno {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
+.disks__row--idle .disks__device,
+.disks__row--idle .disks__number {
+  color: var(--muted);
+}
+
+/* ---- driver/rtc ---- */
+
+/*
+ * One card per group of fields, each with its own heading — the file is a flat
+ * list, and the groups are this page's doing rather than the kernel's, so they
+ * are separated the way sections are rather than run together in one table.
+ */
+.rtc__group + .rtc__group {
+  margin-top: 1rem;
+}
+
+.rtc__title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.rtc__blurb {
+  margin: 0.3rem 0 0.8rem;
+  font-size: 0.85rem;
+}
+
+/* The key as the kernel spells it, spaces and all — never wrapped, since where
+   the spaces fall is the point being made about the separator. */
+.rtc__key {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  width: 14rem;
+}
+
+.rtc__value {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  width: 10rem;
+}
+
+.rtc__value > .chip {
+  margin-left: 0.35rem;
+  white-space: nowrap;
+}
+
+/* The only column that is prose. */
+.rtc__what {
+  min-width: 20rem;
+}
+
+/* ---- dma ---- */
+
+.dma__channel,
+.dma__device {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.dma__channel,
+.dma__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.dma__table th:not(:nth-child(2)) {
+  text-align: right;
+}
+
+/*
+ * Only eight short rows, so the columns are held narrow and the device name
+ * takes the slack. Left to themselves they spread across the full width and
+ * the channel number ends up nowhere near the driver that holds it.
+ */
+.dma__table th:first-child,
+.dma__channel {
+  width: 5rem;
+}
+
+.dma__table th:nth-child(3),
+.dma__table th:nth-child(4),
+.dma__number {
+  width: 7rem;
+}
+
+/* Inferred rather than read: the file lists only allocated channels. */
+.dma__row--free .dma__channel,
+.dma__row--free .dma__device,
+.dma__row--free .dma__number {
+  opacity: 0.5;
+}
+
+/* ---- execdomains ---- */
+
+.execdom__personality,
+.execdom__name,
+.execdom__module {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+/* A range is a pair around a dash; it should never break across lines. */
+.execdom__personality {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.execdom__table th:first-child {
+  text-align: right;
+}
+
+/*
+ * A handful of short rows, so the numbers and the module are held narrow and
+ * the ABI chips take the slack — left alone, the personality range drifts far
+ * from the domain that claims it.
+ */
+.execdom__table th:first-child,
+.execdom__personality {
+  width: 7rem;
+}
+
+.execdom__table th:nth-child(2),
+.execdom__name {
+  width: 12rem;
+}
+
+.execdom__table th:last-child,
+.execdom__module {
+  width: 10rem;
+}
+
+/* ---- fb ---- */
+
+.fb__device,
+.fb__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+/* A device path is one token; it should never break across lines. */
+.fb__device {
+  white-space: nowrap;
+}
+
+/*
+ * A machine has one or two framebuffers, so the device and the kind are held
+ * narrow and the driver name takes the slack — otherwise three short cells
+ * spread across the full width with nothing between them.
+ */
+.fb__table th:first-child,
+.fb__device {
+  width: 9rem;
+}
+
+.fb__table th:last-child,
+.fb__kind {
+  width: 8rem;
+}
+
+/* ---- filesystems ---- */
+
+.fs__name,
+.fs__field {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+/* The literal first field, beside what it is taken to mean. */
+.fs__field {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.fs__table th:nth-child(2),
+.fs__table th:last-child {
+  width: 9rem;
+}
+
+/* ---- gpu_load ---- */
+
+.gpu__id,
+.gpu__holder,
+.gpu__number,
+.gpu__figures {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.gpu__id,
+.gpu__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.gpu__holder {
+  white-space: nowrap;
+}
+
+.gpu__holder > .chip {
+  margin-left: 0.35rem;
+  white-space: nowrap;
+}
+
+.gpu__table th:first-child,
+.gpu__id {
+  width: 4rem;
+}
+
+.gpu__table th:nth-child(2),
+.gpu__holder {
+  width: 12rem;
+}
+
+.gpu__table th:nth-child(3),
+.gpu__table th:nth-child(4),
+.gpu__number {
+  width: 8rem;
+}
+
+.gpu__table th:not(:last-child) {
+  text-align: right;
+}
+
+.gpu__table th:nth-child(2) {
+  text-align: left;
+}
+
+/* The device the rows belong to, above them: it is one thing rather than a
+   table of one, so it reads as a card with the same bar underneath. */
+.gpu__device-name {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.gpu__device-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  margin: 0 0 0.8rem;
+}
+
+.gpu__device-fields dt {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.gpu__device-fields dd {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.gpu__load {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gpu__bar {
+  display: block;
+  flex: 1;
+  min-width: 4rem;
+  height: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.gpu__segment {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+/*
+ * A row with no inactive time counted against it fills the bar without having
+ * pegged anything, so it is drawn as the unmeasured thing it is rather than as
+ * a device at full tilt.
+ */
+.gpu__segment--unmeasured {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--muted),
+    var(--muted) 3px,
+    transparent 3px,
+    transparent 6px
+  );
+}
+
+.gpu__figures {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+/* ---- gpu_memory ---- */
+
+.gpumem__pid,
+.gpumem__number,
+.gpumem__figures {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.gpumem__pid {
+  white-space: nowrap;
+}
+
+.gpumem__pid > .chip {
+  margin-left: 0.35rem;
+  white-space: nowrap;
+}
+
+.gpumem__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.gpumem__table th:first-child,
+.gpumem__pid {
+  width: 12rem;
+}
+
+.gpumem__table th:nth-child(2),
+.gpumem__number {
+  width: 10rem;
+}
+
+.gpumem__table th:nth-child(2) {
+  text-align: right;
+}
+
+/* The count is what the file holds and the size is worked out from it, so the
+   size goes underneath rather than beside: one column, two readings of it. */
+.gpumem__size {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.gpumem__device-name {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.gpumem__device-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  margin: 0;
+}
+
+.gpumem__device-fields dt {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.gpumem__device-fields dd {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.gpumem__share {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gpumem__bar {
+  display: block;
+  flex: 1;
+  min-width: 4rem;
+  height: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.gpumem__segment {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.gpumem__figures {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---- interrupts ---- */
+
+.irq__label {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.irq__chip {
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.irq__hw {
+  color: var(--muted);
+}
+
+.irq__table th:not(:nth-child(2)),
+.irq__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.irq__table th:first-child {
+  text-align: right;
+}
+
+/* The CPU that took the most of a line, so affinity reads down the table. */
+.irq__number--top {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.irq__row--idle .irq__label,
+.irq__row--idle .irq__chip,
+.irq__row--idle .irq__number {
+  opacity: 0.55;
+}
+
+/* ---- iomem ---- */
+
+.iomem__range,
+.iomem__size,
+.iomem__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+/*
+ * An address pair is one token, and the indentation in front of it is the
+ * nesting — both are lost if the cell wraps. The padding is set per row, so
+ * the cell's own is left out of the rule.
+ */
+.iomem__range {
+  white-space: nowrap;
+}
+
+.iomem__size {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.iomem__table th:nth-child(2) {
+  text-align: right;
+}
+
+.iomem__table th:first-child,
+.iomem__range {
+  width: 18rem;
+}
+
+.iomem__table th:nth-child(2),
+.iomem__size {
+  width: 7rem;
+}
+
+/* The only rows that are memory the kernel can hand out. */
+.iomem__row--ram .iomem__name {
+  color: var(--text);
+}
+
+.iomem__row:not(.iomem__row--ram) .iomem__name {
+  color: var(--muted);
+}
+
+/* ---- ioports ---- */
+
+.ioports__range,
+.ioports__ports,
+.ioports__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+/* A port pair is one token, and the indentation in front of it is the
+   nesting — both are lost if the cell wraps. */
+.ioports__range {
+  white-space: nowrap;
+}
+
+.ioports__ports {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ioports__table th:nth-child(2) {
+  text-align: right;
+}
+
+.ioports__table th:first-child,
+.ioports__range {
+  width: 14rem;
+}
+
+.ioports__table th:nth-child(2),
+.ioports__ports {
+  width: 8rem;
+}
+
+/* The block the original PC laid out, still where those devices are found. */
+.ioports__row--legacy .ioports__name {
+  color: var(--accent);
+}
+
+/* ---- irq/default_smp_affinity ---- */
+
+/*
+ * The CPU list, which is the one tile whose value is not a number: it can be
+ * `0-95` or a string of ranges, so it is allowed to be as wide as it needs and
+ * set smaller than the figures beside it.
+ */
+.affinity__stat--wide {
+  max-width: 100%;
+}
+
+.affinity__stat--wide .stat__value {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 1.15rem;
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+/*
+ * The mask as the kernel writes it, group by group. The groups are laid out in
+ * file order — most significant first — with the CPUs each covers under it,
+ * because that order is the thing about the format worth showing rather than
+ * saying.
+ */
+.affinity__groups {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.affinity__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.5rem 0.7rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+/* A group naming at least one CPU, against the zeroed ones beside it. */
+.affinity__group--set {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+.affinity__digits {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+}
+
+.affinity__group--set .affinity__digits {
+  color: var(--accent);
+}
+
+.affinity__span {
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* What the layout above is saying, under it. */
+.affinity__order {
+  margin: 0.8rem 0 0;
+  font-size: 0.82rem;
+}
+
+.affinity__slots {
+  margin-top: 1rem;
+}
+
+/*
+ * One chip per bit the mask spells. Tabular figures so the columns line up as
+ * the numbers gain digits, which is what makes a wide grid readable at all.
+ */
+.affinity__cpu {
+  min-width: 2.2rem;
+  text-align: center;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The CPUs the mask actually names, which is the whole point of the grid. */
+.affinity__cpu--set {
+  background: color-mix(in srgb, var(--accent) 22%, var(--surface-2));
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ---- kallsyms ---- */
+
+.ksym__address,
+.ksym__name,
+.ksym__module {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+/* Sixteen hex digits are one token, and wrapping them helps nobody. */
+.ksym__address {
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+/* A symbol name can be long; it is the column with room to give. */
+.ksym__name {
+  word-break: break-all;
+}
+
+.ksym__table th:first-child,
+.ksym__address {
+  width: 11rem;
+}
+
+.ksym__table th:nth-child(2),
+.ksym__type {
+  width: 4rem;
+}
+
+.ksym__table th:nth-child(4),
+.ksym__scope {
+  width: 7rem;
+}
+
+.ksym__table th:last-child,
+.ksym__module {
+  width: 9rem;
+}
+
+/* ---- key-users ---- */
+
+.kusers__uid,
+.kusers__number,
+.kusers__figures {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.kusers__uid,
+.kusers__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.kusers__table th:not(:nth-child(4)):not(:nth-child(5)) {
+  text-align: right;
+}
+
+.kusers__table th:first-child,
+.kusers__uid {
+  width: 7rem;
+}
+
+.kusers__table th:nth-child(2),
+.kusers__table th:nth-child(3),
+.kusers__table th:last-child,
+.kusers__number {
+  width: 6rem;
+}
+
+/* A bar and the pair the kernel printed, since the share is the readable part
+   and the raw numbers are what the file actually says. */
+.kusers__quota {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.kusers__bar {
+  display: block;
+  flex: 1;
+  min-width: 3rem;
+  height: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.kusers__segment {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+/* Close enough to the limit that the next key may fail with EDQUOT. */
+.kusers__segment--full {
+  background: var(--warn);
+}
+
+.kusers__figures {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---- keys ---- */
+
+.keys__serial,
+.keys__type,
+.keys__description,
+.keys__timeout,
+.keys__owner {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.keys__serial,
+.keys__timeout,
+.keys__owner {
+  white-space: nowrap;
+}
+
+.keys__timeout,
+.keys__owner {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.keys__table th:nth-child(5),
+.keys__table th:last-child {
+  text-align: right;
+}
+
+.keys__table th:first-child,
+.keys__serial {
+  width: 6rem;
+}
+
+.keys__table th:nth-child(2),
+.keys__type {
+  width: 8rem;
+}
+
+.keys__table th:nth-child(5),
+.keys__timeout {
+  width: 5rem;
+}
+
+.keys__table th:last-child,
+.keys__owner {
+  width: 6rem;
+}
+
+/* A description can be long; it is the column with room to give. */
+.keys__description {
+  word-break: break-all;
+}
+
+/* A subject granted nothing at all, kept in place so the four still line up. */
+.keys__perm--none {
+  border-style: dashed;
+  color: var(--muted);
+}
+
+/* Expired, and listed only until the kernel collects it. */
+.keys__row--expired .keys__serial,
+.keys__row--expired .keys__description {
+  opacity: 0.55;
+}
+
+/* ---- latency_stats ---- */
+
+.lat__site,
+.lat__number {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.lat__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.lat__table th:nth-child(2),
+.lat__table th:nth-child(4),
+.lat__table th:nth-child(5),
+.lat__table th:nth-child(6) {
+  text-align: right;
+}
+
+.lat__table th:first-child,
+.lat__site {
+  width: 16rem;
+}
+
+.lat__table th:nth-child(2),
+.lat__table th:nth-child(4),
+.lat__table th:nth-child(5),
+.lat__table th:nth-child(6),
+.lat__number {
+  width: 6rem;
+}
+
+/* Each record's total against the worst, so the cost reads down the table. */
+.lat__bar-cell {
+  width: 8%;
+  min-width: 4rem;
+}
+
+.lat__bar {
+  display: block;
+  width: 100%;
+  height: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.lat__segment {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+/* ---- loadavg ---- */
+
+.load__figure {
+  display: flex;
+  flex-direction: column;
+}
+
+.load__value {
+  font-size: 2.2rem;
+  font-weight: 600;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.load__window {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* Pushed to the end, since it is read off the three rather than being a fourth. */
+.load__trend {
+  margin-left: auto;
+  align-self: flex-start;
+}
+
+/* ---- locks ---- */
+
+.locks__id,
+.locks__access,
+.locks__range,
+.locks__file,
+.locks__pid {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.locks__id,
+.locks__pid {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.locks__range,
+.locks__file {
+  white-space: nowrap;
+}
+
+.locks__table th:first-child,
+.locks__table th:last-child {
+  text-align: right;
+}
+
+.locks__table th:first-child,
+.locks__id {
+  width: 4rem;
+}
+
+.locks__table th:nth-child(2),
+.locks__table th:nth-child(3),
+.locks__table th:nth-child(4),
+.locks__kind,
+.locks__state,
+.locks__access {
+  width: 7rem;
+}
+
+.locks__table th:last-child,
+.locks__pid {
+  width: 5rem;
+}
+
+/* Queued behind the lock above rather than holding one of its own. */
+.locks__row--waiting td {
+  opacity: 0.75;
+}
+
+.locks__row--waiting .locks__id {
+  color: var(--warn);
+  opacity: 1;
+}
+
+/* ---- main ---- */
+
+.cpu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.cpu-card__header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.cpu-card__index {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.cpu-card__model {
+  margin: 0;
+  font-size: 0.95rem;
+  flex: 1 1 12rem;
+}
+
+.cpu-card__clock {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.cpu-card__section {
+  margin-top: 0.9rem;
+}
+
+.cpu-card__section h4 {
+  margin: 0 0 0.45rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+/* ---- mdstat ---- */
+
+.md__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.75rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.95rem;
+}
+
+/* Short of a member: still serving, with nothing left to lose. */
+.md--degraded {
+  border-color: color-mix(in srgb, var(--danger) 40%, var(--border));
+}
+
+.md__facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 0.75rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.82rem;
+}
+
+.md__facts dt {
+  color: var(--muted);
+}
+
+.md__facts dd {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Kept as the kernel wrote it, since it reads faster than any prose would. */
+.md__status {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.08em;
+}
+
+.md__up {
+  color: var(--accent);
+}
+
+.md__down {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.md__members {
+  margin: 0 0 0.75rem;
+}
+
+/* The letter after a member, which is its state rather than part of the name. */
+.md__flag {
+  margin-left: 0.2rem;
+  padding: 0 0.15rem;
+  border-radius: 3px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+.md__progress {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.md__bar {
+  display: block;
+  flex: 1;
+  min-width: 4rem;
+  height: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.md__segment {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.md__figures {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ---- meminfo ---- */
+
+/* Used, cache and free across the width, the way `free` lays them out. */
+.mem__bar {
+  display: flex;
+  width: 100%;
+  height: 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.mem__segment {
+  display: block;
+  height: 100%;
+}
+
+.mem__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8rem;
+}
+
+.mem__key {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.mem__swatch {
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+.mem__field,
+.mem__value,
+.mem__unit {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.mem__value,
+.mem__unit {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.mem__table th:not(:first-child) {
+  text-align: right;
+}
+
+.mem__table th:nth-child(2),
+.mem__value {
+  width: 8rem;
+}
+
+.mem__table th:last-child,
+.mem__unit {
+  width: 12rem;
+}
+
+/* ---- misc ---- */
+
+.misc__minor,
+.misc__number,
+.misc__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.misc__minor {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The pair is what the device node is, and should not break across lines. */
+.misc__number {
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+.misc__table th:first-child {
+  text-align: right;
+}
+
+.misc__table th:first-child,
+.misc__minor {
+  width: 5rem;
+}
+
+.misc__table th:nth-child(2),
+.misc__number {
+  width: 6rem;
+}
+
+.misc__table th:nth-child(3),
+.misc__name {
+  width: 11rem;
+}
+
+.misc__table th:nth-child(4),
+.misc__kind {
+  width: 7rem;
+}
+
+/* The explanation is prose, so it takes what the columns leave. */
+.misc__what {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* ---- modules ---- */
+
+.modules__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.modules__table th:nth-child(2),
+.modules__table th:nth-child(3),
+.modules__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.modules__deps {
+  width: 26%;
+}
+
+/* Nothing holds a reference, so rmmod would take it out. */
+.modules__row--removable .modules__name,
+.modules__row--removable .modules__number {
+  opacity: 0.6;
+}
+
+/* ---- pagetypeinfo ---- */
+
+.ptype__name {
+  margin: 0 0 0.6rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9rem;
+}
+
+.ptype__blocks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+}
+
+/* A column per order on top of the fixed ones, so this table can outgrow the
+   card it sits in. */
+.ptype__scroll {
+  overflow-x: auto;
+}
+
+.ptype__type,
+.ptype__count,
+.ptype__total,
+.ptype__largest {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+}
+
+.ptype__count,
+.ptype__total,
+.ptype__largest {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ptype__table th:not(:first-child) {
+  text-align: right;
+}
+
+.ptype__table th:first-child,
+.ptype__type {
+  width: 7rem;
+  white-space: nowrap;
+}
+
+/* Nothing free at this order, which is what makes a row's shape readable. */
+.ptype__count--none {
+  color: var(--muted);
+  opacity: 0.5;
+}
+
+/* Orders at or above a pageblock: what a huge page needs to come from. */
+.ptype__count--whole {
+  color: var(--accent);
+}
+
+/* ---- partitions ---- */
+
+.parts__name,
+.parts__devno {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+/* Partitions sit under their disk, as they do on the device. */
+.parts__name--part {
+  padding-left: 1.4rem;
+}
+
+.parts__devno {
+  color: var(--muted);
+}
+
+.parts__table th:nth-child(2),
+.parts__table th:nth-child(3),
+.parts__table th:nth-child(4),
+.parts__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.parts__bar-cell {
+  width: 26%;
+  min-width: 6rem;
+}
+
+.parts__bar {
+  display: block;
+  width: 100%;
+  height: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.parts__segment {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+/* Space the disk has left over is shown, but not as though it were in use. */
+.parts__segment--free {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--border),
+    var(--border) 3px,
+    transparent 3px,
+    transparent 6px
+  );
+}
+
+.parts__row--empty .parts__name,
+.parts__row--empty .parts__devno,
+.parts__row--empty .parts__number {
+  opacity: 0.55;
+}
+
+/* ---- pid/auxv ---- */
+
+/* Where the pair sits in the file, which is what ties a row to the hex dump. */
+.auxv__offset,
+.auxv__type {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--muted);
+  width: 3.5rem;
+}
+
+.auxv__table th:first-child,
+.auxv__table th:nth-child(2) {
+  text-align: right;
+}
+
+.auxv__name {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.auxv__name > .chip {
+  margin-left: 0.35rem;
+  white-space: nowrap;
+}
+
+/*
+ * The values, which are mostly addresses: tabular figures so that two pointers
+ * on different rows can be compared column by column, which is how you see that
+ * two of them are in the same mapping.
+ */
+.auxv__value {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--accent);
+}
+
+/* The only column that is prose. */
+.auxv__what {
+  min-width: 22rem;
+}
+
+/* ---- pid/autogroup ---- */
+
+/*
+ * The line itself, given a card of its own: the whole file is one line, and
+ * what it names is a group rather than this process, so it is set out to be
+ * read and compared against another page rather than skimmed.
+ */
+.ag__name {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.ag__name code {
+  color: var(--accent);
+}
+
+.ag__reading {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+}
+
+/*
+ * The one tile whose value is a phrase rather than a number — `a ninth of a
+ * default group` — so it is set smaller and allowed to wrap rather than
+ * stretching the row it sits in.
+ */
+.ag__stat--wide {
+  max-width: 16rem;
+}
+
+.ag__stat--wide .stat__value {
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+/* ---- pid/cgroup ---- */
+
+/* The hierarchy id, which is 0 for the unified one and arbitrary for the rest. */
+.cg2__id {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--muted);
+  width: 3rem;
+}
+
+.cg2__table th:first-child {
+  text-align: right;
+}
+
+.cg2__controllers {
+  width: 16rem;
+}
+
+.cg2__controllers .chip {
+  margin: 0 0.25rem 0.2rem 0;
+  display: inline-block;
+}
+
+/*
+ * The cgroup, drawn as the tree it names: the separators are the path's own, so
+ * it still reads as one string, and only the last segment — the cgroup this
+ * process is actually in — is set solid.
+ */
+.cg2__path {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.cg2__separator {
+  color: var(--muted);
+}
+
+.cg2__segment {
+  color: var(--muted);
+}
+
+.cg2__segment--here {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* The root cgroup, which is a place rather than an absence of one. */
+.cg2__segment--root {
+  color: var(--text);
+}
+
+.cg2__note {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+}
+
+/* The unified hierarchy, which is the one that matters on a current machine. */
+.cg2__row--unified .cg2__id {
+  color: var(--accent);
+}
+
+/* ---- pid/cmdline ---- */
+
+/* Pid cmdline page: the vector rebuilt, the bytes as they are, then a row each */
+
+.pcmd__block {
+  margin-bottom: 1rem;
+}
+
+.pcmd__heading {
+  margin: 0 0 0.6rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.pcmd__command {
+  margin: 0;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  /* The vector is one line however long it is: wrapping it would invent a
+     boundary where the file has none. */
+  white-space: pre;
+}
+
+.pcmd__caption {
+  margin: 0.6rem 0 0;
+  font-size: 0.75rem;
+}
+
+.pcmd__index {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  text-align: right;
+  width: 3ch;
+}
+
+.pcmd__arg {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.pcmd__table th:nth-child(1),
+.pcmd__table th:nth-child(3),
+.pcmd__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pcmd__notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+}
+
+/* Already read by every user on the machine, which is the whole point. */
+.pcmd__row--secret .pcmd__arg {
+  color: var(--danger);
+}
+
+/* ---- pid/environ ---- */
+
+.env__name,
+.env__text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.env__table th:first-child,
+.env__name {
+  width: 16rem;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.env__name > .chip {
+  margin-left: 0.35rem;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+/* A value is whatever the caller passed: a PATH runs the width of the page and
+   an LS_COLORS runs well past it, so it breaks rather than pushing the table. */
+.env__text {
+  word-break: break-all;
+}
+
+/* Except where the value has its own line breaks, which are part of it. */
+.env__text--wrapped {
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.env__value > .chip {
+  margin-left: 0.35rem;
+  vertical-align: middle;
+}
+
+/* Written earlier too, so this is not the one `getenv` returns. */
+.env__row--shadowed .env__name,
+.env__row--shadowed .env__text {
+  color: var(--muted);
+}
+
+.env__stray {
+  margin-right: 0.35rem;
+}
+
+/* ---- pid/coredump_filter ---- */
+
+/* The standing against the default is a word rather than a figure, so it is
+   allowed to be as wide as `the kernel default` needs. */
+.dump__stat--wide {
+  max-width: 100%;
+}
+
+.dump__table th:first-child {
+  width: 7rem;
+}
+
+/* The bit's own number, which is what the kernel constant is named for, over
+   the digit it is in the file — the two halves of reading `00000033`. */
+.dump__bit {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.dump__index {
+  font-size: 1.05rem;
+}
+
+.dump__hex {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.dump__state {
+  width: 11rem;
+  white-space: nowrap;
+}
+
+.dump__state > .chip + .chip {
+  margin-left: 0.35rem;
+}
+
+/* A bit that is on, against the ones beside it that are not. */
+.dump__on {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  color: var(--accent);
+}
+
+.dump__mapping {
+  font-weight: 600;
+}
+
+.dump__flag {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+}
+
+/* What the bit costs and buys, which is prose under the name rather than
+   another column — nine of these is already a page of reading. */
+.dump__note {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+/* A row the filter leaves out reads as absent rather than as missing. */
+.dump__row:not(.dump__row--set) .dump__mapping {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ---- pid/io ---- */
+
+/* The file's two measurements are two tables rather than one, so each carries a
+   caption saying which layer it is — that distinction is the whole page. */
+.io__caption {
+  caption-side: top;
+  text-align: left;
+  padding: 0 0 0.6rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.io__table th:first-child {
+  width: 14rem;
+}
+
+/* The kernel's own name for the counter, over what it actually counts — the
+   two halves of reading a line like `rchar: 271534592`. */
+.io__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.io__label {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: var(--font-body, inherit);
+  font-size: 0.74rem;
+  font-weight: 400;
+  white-space: normal;
+}
+
+.io__value {
+  width: 10rem;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/* The exact byte count under the rounded one: these are counters, and the last
+   digits are occasionally the point. */
+.io__exact {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
+/* What the counter counts, which is prose and takes what the figures leave. */
+.io__what {
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+/* ---- pid/time_in_state ---- */
+
+/* A card per frequency policy, because the policies are the thing this file
+   names and the uid one does not. `uidtis__*` is the other page's; these are
+   this one's, since the two lay their frequencies out differently. */
+.tis {
+  margin-bottom: 1rem;
+}
+
+.tis__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.tis__name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* The header names the first CPU of a policy and not the only one, so the
+   caption under it has to carry that — it is the page's main correction. */
+.tis__what {
+  font-size: 0.76rem;
+  font-weight: 400;
+}
+
+.tis__totals {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+.tis__time {
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.tis__table th:first-child {
+  width: 11rem;
+}
+
+.tis__freq {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* The kHz the file actually prints, under the reading of it. */
+.tis__khz {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
+.tis__value,
+.tis__ticks {
+  width: 8rem;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.tis__ticks {
+  text-align: right;
+  font-size: 0.78rem;
+}
+
+/* The bar runs against this policy's own busiest step, never against the
+   file's: two clusters' times are not a comparison worth drawing. */
+.tis__share {
+  position: relative;
+  min-width: 9rem;
+}
+
+.tis__bar {
+  display: inline-block;
+  height: 0.6rem;
+  min-width: 1px;
+  vertical-align: middle;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.tis__pct {
+  margin-left: 0.5rem;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.tis__row--busiest .tis__bar {
+  background: var(--accent);
+}
+
+.tis__row--busiest .tis__freq {
+  color: var(--accent);
+}
+
+.tis__mean {
+  margin: 0.75rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+/* ---- pid/statm ---- */
+
+.statm__table th:first-child {
+  width: 13rem;
+}
+
+/* The column number, the kernel's name for it, and what it means — anything
+   parsing this file parses by position, so the number leads. */
+.statm__name {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap: 0 0.5rem;
+  align-items: baseline;
+  font-weight: 600;
+}
+
+.statm__col {
+  grid-row: 1 / span 2;
+  font-size: 1.05rem;
+  color: var(--muted);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.statm__key {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.82rem;
+}
+
+.statm__label {
+  font-size: 0.74rem;
+  font-weight: 400;
+}
+
+.statm__kind {
+  width: 9rem;
+  white-space: nowrap;
+}
+
+/* Address space against memory actually in RAM: the distinction that makes
+   three of these columns incomparable with the other two. */
+.statm__chip--virtual {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  color: var(--accent);
+}
+
+.statm__chip--resident {
+  border-color: color-mix(in srgb, var(--ok, var(--accent)) 45%, var(--border));
+}
+
+.statm__value {
+  width: 9rem;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/* The count the file actually holds, under the size it comes to at an assumed
+   page size — the file states pages and never which pages. */
+.statm__pages {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
+.statm__share {
+  width: 5rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.statm__what {
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.statm__status {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.74rem;
+}
+
+/* A column the kernel froze at zero reads as the placeholder it is. */
+.statm__row--unused .statm__key,
+.statm__row--unused .statm__label {
+  color: var(--muted);
+}
+
+.statm__row--unused .statm__key {
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--muted) 60%, transparent);
+}
+
+/* ---- pid/stack ---- */
+
+/* The frames run innermost first, so the depth column leads and reads down the
+   way the chain does: 0 is where the task is, the last is how it got in. */
+.stack__table th:nth-child(1),
+.stack__depth {
+  width: 2.5rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+/* The column that is furniture: the kernel types a zero into it. Kept because
+   the file has it, dimmed because it never says anything. */
+.stack__bracket {
+  width: 4.5rem;
+  white-space: nowrap;
+  font-size: 0.74rem;
+}
+
+.stack__symbol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+.stack__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.82rem;
+}
+
+.stack__offset {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
+.stack__role {
+  width: 11rem;
+  white-space: nowrap;
+}
+
+.stack__role > .chip + .chip {
+  margin-left: 0.3rem;
+}
+
+/* The __sched frames say only that the task is asleep — the frame after them is
+   the one that says what for, and that is the one wchan names. */
+.stack__chip--scheduler {
+  color: var(--muted);
+}
+
+.stack__chip--wait {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  color: var(--accent);
+}
+
+.stack__chip--entry,
+.stack__chip--syscall {
+  border-color: color-mix(in srgb, var(--border) 100%, transparent);
+}
+
+.stack__row--wait .stack__name {
+  color: var(--accent);
+}
+
+.stack__what {
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+/* A symbol runs long, so the tiles let one wrap rather than pushing the row. */
+.stack__stat .stat__value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.95rem;
+  word-break: break-all;
+}
+
+/* ---- pid/setgroups ---- */
+
+/* The three conditions setgroups() has to clear. The page's whole point is
+   that this file answers one of them, so the one it answers is lit and the
+   other two say where their answer actually lives. */
+.setg__table th:first-child {
+  width: 16rem;
+}
+
+.setg__name {
+  font-weight: 600;
+}
+
+.setg__answer {
+  width: 12rem;
+  white-space: nowrap;
+}
+
+.setg__chip--met {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  color: var(--accent);
+}
+
+/* Where to go for a condition this file does not carry. */
+.setg__where {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.72rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.setg__what {
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+/* The row this file is actually about, against the two it only points at. */
+.setg__row--reported .setg__name {
+  color: var(--accent);
+}
+
+.setg__row:not(.setg__row--reported) .setg__name {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ---- pid/schedstat ---- */
+
+.sched__table th:first-child {
+  width: 15rem;
+}
+
+/* Column number, the kernel's name for it, then what it means — the file is
+   three numbers on a line, so the position leads. */
+.sched__name {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap: 0 0.5rem;
+  align-items: baseline;
+  font-weight: 600;
+}
+
+.sched__col {
+  grid-row: 1 / span 2;
+  font-size: 1.05rem;
+  color: var(--muted);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.sched__key {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.82rem;
+}
+
+.sched__label {
+  font-size: 0.74rem;
+  font-weight: 400;
+}
+
+.sched__value {
+  width: 10rem;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/* The counter as the file holds it, under the reading of it: these are
+   cumulative counters and the digits are occasionally the point. */
+.sched__raw {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
+.sched__what {
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+/* The second column is the one the file exists for and the one nobody reads,
+   so it is the one lit. */
+.sched__row--key .sched__key,
+.sched__row--key .sched__value {
+  color: var(--accent);
+}
+
+.sched__row--key {
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+/* ---- pid/maps ---- */
+
+/* The address range leads, since the file is a walk through the address space
+   in order and the ranges are what make the gaps visible. */
+.maps__range {
+  width: 13rem;
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.76rem;
+}
+
+.maps__start {
+  display: block;
+  font-weight: 600;
+}
+
+.maps__end {
+  display: block;
+}
+
+.maps__size {
+  width: 8rem;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/* Unmapped space before this mapping — the holes the file does not list. */
+.maps__gap {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
+.maps__perms {
+  width: 9rem;
+  white-space: nowrap;
+}
+
+.maps__perms > code {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.maps__perms > .chip {
+  margin-left: 0.35rem;
+}
+
+/* The fourth character is the mapping's type, not a fourth permission — so
+   shared is the one worth colouring. */
+.maps__chip--shared {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  color: var(--accent);
+}
+
+.maps__kind {
+  width: 8rem;
+  white-space: nowrap;
+}
+
+.maps__label {
+  font-weight: 600;
+}
+
+.maps__file {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  word-break: break-all;
+}
+
+.maps__path > .chip {
+  margin-left: 0.35rem;
+}
+
+/* Writable and executable at once: what a JIT needs and a loader should not
+   leave behind. */
+.maps__row--wx .maps__label {
+  color: var(--warn);
+}
+
+/* The totals by kind, which is the shape of an address space at a glance. */
+.maps__kinds {
+  margin-bottom: 1rem;
+}
+
+.maps__heading {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+}
+
+.maps__kindlist {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.maps__kindrow {
+  display: grid;
+  grid-template-columns: 7rem 7rem 8rem 1fr;
+  gap: 0.5rem;
+  align-items: baseline;
+  font-size: 0.8rem;
+}
+
+.maps__kindname {
+  font-weight: 600;
+}
+
+.maps__kindbytes {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.maps__kindwhat {
+  font-size: 0.76rem;
+}
+
+@media (max-width: 40rem) {
+  .maps__kindrow {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ---- pid/limits ---- */
+
+/* Limits page: the soft and hard pair per resource, and what each one bounds */
+
+.lim__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.lim__table th:nth-child(2),
+.lim__table th:nth-child(3),
+.lim__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The kernel's own unit, beside the value shown in whatever reads best. */
+.lim__unit {
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* The explanation is prose, so it takes what the four narrow columns leave. */
+.lim__note {
+  font-size: 0.78rem;
+  color: var(--muted);
+  min-width: 20rem;
+}
+
+.lim__resource,
+.lim__flag {
+  margin-right: 0.4rem;
+  font-size: 0.72rem;
+  color: var(--text);
+}
+
+.lim__flag {
+  color: var(--muted);
+}
+
+/* Printed by every kernel and acted on by none since 2.4. */
+.lim__row--unenforced .lim__name,
+.lim__row--unenforced .lim__number {
+  opacity: 0.55;
+}
+
+/* ---- pid/mountinfo ---- */
+
+/* Mountinfo page — the mounts of one process, as the tree they are */
+
+.minfo {
+  padding: 0;
+  overflow-x: auto;
+}
+
+.minfo__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.minfo__table th {
+  position: sticky;
+  top: 0;
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.minfo__table td {
+  padding: 0.45rem 0.75rem;
+  border-top: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.minfo__row--pseudo .minfo__point,
+.minfo__row--pseudo .minfo__source,
+.minfo__row--pseudo .minfo__devno {
+  color: var(--muted);
+}
+
+/* The indent is the depth in the tree, set per row from the parent ids. */
+.minfo__point {
+  display: inline-block;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.minfo__flags {
+  display: inline-flex;
+  gap: 0.3rem;
+  margin-left: 0.4rem;
+  vertical-align: baseline;
+}
+
+.minfo__source {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  word-break: break-all;
+  max-width: 22ch;
+}
+
+/* What a bind is a bind *of*, which is the only place the file says so. */
+.minfo__root {
+  display: block;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.minfo__devno {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.minfo__propagation {
+  min-width: 10rem;
+}
+
+.minfo__options {
+  min-width: 14rem;
+}
+
+.chip--bind {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  color: var(--accent);
+}
+
+.chip--ro-super {
+  border-color: color-mix(in srgb, var(--warn) 50%, var(--border));
+  color: var(--warn);
+}
+
+.chip--shared {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+}
+
+.chip--slave,
+.chip--unbindable {
+  border-color: color-mix(in srgb, var(--warn) 35%, var(--border));
+  color: var(--muted);
+}
+
+/* ---- pid/net/arp ---- */
+
+/* net/arp page: the neighbours of one network namespace */
+
+.arp__ip,
+.arp__hw,
+.arp__device,
+.arp__mask {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.arp__ip {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * An InfiniBand address is twenty bytes, so this one column can be three times
+ * the width of the rest of the row put together — let it wrap when it has to
+ * rather than pushing the device off the side of the card. `anywhere` breaks
+ * only where nothing else fits, so an ordinary six-byte address stays whole.
+ */
+.arp__hw {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* The flags as the file writes them, with the bits they stand for beside. */
+.arp__flagvalue {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.arp__flags {
+  display: inline;
+}
+
+.arp__type {
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+/*
+ * Nothing answered for these. They are in the table because the kernel is
+ * still asking — or has given up, which this file cannot tell apart — so they
+ * are dimmed rather than called out.
+ */
+.arp__row--incomplete .arp__ip,
+.arp__row--incomplete .arp__hw,
+.arp__row--incomplete .arp__device {
+  color: var(--muted);
+}
+
+/* One line per hardware address that several neighbours resolve to. */
+.arp__shared {
+  display: block;
+}
+
+/* ---- pid/net/connector ---- */
+
+/* net/connector page: what is registered on the connector bus */
+
+.conn__name,
+.conn__id {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.conn__name {
+  font-weight: 600;
+}
+
+/* The bus address, which is the one column that is a pair of numbers. */
+.conn__id {
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  width: 5rem;
+}
+
+.conn__constant {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.74rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* The only column that is prose, so it takes what is left. */
+.conn__what {
+  min-width: 20rem;
+}
+
+/* The release that deleted the driver, beside what it did. */
+.conn__gone {
+  display: inline-block;
+  margin-left: 0.35rem;
+  white-space: nowrap;
+}
+
+/* One line per registration a notice is about. */
+.conn__note {
+  display: block;
+}
+
+/* The one registration nearly every machine has. */
+.conn__row--proc .conn__name {
+  color: var(--accent);
+}
+
+/* ---- pid/net/dev ---- */
+
+/* net/dev page: the interfaces of one namespace, and sixteen counters each */
+
+.netdev__name {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Every counter column reads as a number, so they line up on their digits. */
+.netdev__bytes,
+.netdev__packets,
+.netdev__count,
+.netdev__rate {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.netdev__bytes {
+  font-weight: 600;
+}
+
+/* The narrow error columns, which are mostly zeroes and should read that way. */
+.netdev__count {
+  font-size: 0.78rem;
+}
+
+/* A counter that is not zero, in a column where zero is the expected answer. */
+.netdev__hit {
+  color: var(--warn);
+  font-weight: 600;
+}
+
+.netdev__table th {
+  text-align: right;
+}
+
+.netdev__table th:first-child {
+  text-align: left;
+}
+
+/* The two halves of the file, named across the columns they cover. */
+.netdev__group {
+  text-align: center !important;
+  border-left: 1px solid var(--border);
+}
+
+.netdev__table td:nth-child(2),
+.netdev__table td:nth-child(7),
+.netdev__table th:nth-child(2) {
+  border-left: 1px solid var(--border);
+}
+
+/* Registered and never used: the kernel has the device, nothing came through. */
+.netdev__row--idle td {
+  color: var(--muted);
+}
+
+/* Loopback counts one traffic twice, so it is in the table but not of it. */
+.netdev__row--loopback .netdev__name {
+  color: var(--muted);
+}
+
+/* ---- pid/smaps ---- */
+
+/* Smaps page: a card per mapping, largest proportional cost first */
+
+.sm__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+}
+
+.sm__label {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  word-break: break-all;
+}
+
+.sm__where {
+  margin: 0 0 0.6rem;
+  font-size: 0.75rem;
+}
+
+.sm__where code {
+  font-size: 0.75rem;
+}
+
+/* The full path, where the card is headed by the basename. */
+.sm__path {
+  word-break: break-all;
+}
+
+.sm__headline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+}
+
+.sm__field {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.sm__table th:not(:first-child):not(:last-child),
+.sm__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.sm__note {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* Most of a mapping's fields are zero; they are still worth listing. */
+.sm__row--zero .sm__field,
+.sm__row--zero .sm__number {
+  opacity: 0.55;
+}
+
+.sm__flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.75rem 0 0;
+  font-size: 0.72rem;
+}
+
+.sm__kinds {
+  margin-bottom: 1.25rem;
+}
+
+/* ---- pid/stat ---- */
+
+/* Pid stat page: the fifty-two fields, as printed and as they read */
+
+.pstat__index {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  text-align: right;
+  width: 3ch;
+}
+
+.pstat__field {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* The bytes as the kernel wrote them, beside what they are taken to mean. */
+.pstat__raw,
+.pstat__value {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.pstat__raw {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  max-width: 22ch;
+  overflow-wrap: anywhere;
+}
+
+.pstat__note {
+  font-size: 0.78rem;
+  color: var(--muted);
+  min-width: 20rem;
+}
+
+/* The same 1rem the summary tiles get above any other block under them; the
+   chip row below brings its own, and the two collapse to one. */
+.pstat__state {
+  margin: 1rem 0 0;
+  font-size: 0.8rem;
+}
+
+/* Printed by every kernel and kept up to date by none of them. */
+.pstat__row--dead .pstat__field,
+.pstat__row--dead .pstat__raw,
+.pstat__row--dead .pstat__value {
+  opacity: 0.5;
+}
+
+/* ---- pid/status ---- */
+
+/* Status page: every line as printed, and what the encoded ones decode to */
+
+.pstatus__field {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pstatus__raw {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The value as the kernel wrote it. Most are short — a hex mask is sixteen
+   characters, a memory figure fewer — but three are not bounded at all:
+   `Groups` grows with what the user belongs to, and `Cpus_allowed` and
+   `Mems_allowed` grow with the machine, reaching hundreds of characters on a
+   big one. Left on one line those widen the column by as much, pushing the
+   note beside them out of the card's scroll box.
+
+   The cap is on this box rather than on the cell around it because a cell's
+   max-width is not honoured under automatic table layout, where the column's
+   width comes from its contents. An inline-block's is, so the column can grow
+   no wider than this however long the value. Everything ordinary sits well
+   inside it and still occupies one line; only what exceeds it wraps, and
+   `anywhere` is what lets a mask break at all, since a comma-run of hex digits
+   offers nowhere else to do it. */
+.pstatus__printed {
+  display: inline-block;
+  max-width: 22ch;
+  overflow-wrap: anywhere;
+}
+
+/* What the encoded lines decode to. A signal or capability set runs to a
+   dozen names, so this column wraps where the pid stat page's does not. */
+.pstatus__value {
+  font-size: 0.78rem;
+  max-width: 26rem;
+  overflow-wrap: anywhere;
+}
+
+.pstatus__note {
+  font-size: 0.78rem;
+  color: var(--muted);
+  min-width: 20rem;
+}
+
+/* A line printed by a kernel newer than this page's table of them. */
+.pstatus__row--unknown .pstatus__field,
+.pstatus__row--unknown .pstatus__raw {
+  opacity: 0.55;
+}
+
+/* ---- pid/syscall ---- */
+
+/* Syscall page: the number under each ABI, then the six registers */
+
+.sysc__abi,
+.sysc__name,
+.sysc__value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.sysc__name {
+  font-weight: 600;
+}
+
+.sysc__index {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  text-align: right;
+  width: 3ch;
+}
+
+.sysc__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.sysc__note {
+  font-size: 0.78rem;
+  color: var(--muted);
+  min-width: 18rem;
+}
+
+.sysc__notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+}
+
+/* Past the end of the call's own arguments: printed, but not passed. */
+.sysc__row--leftover .sysc__value,
+.sysc__row--leftover .sysc__number {
+  opacity: 0.5;
+}
+
+.sysc {
+  margin-bottom: 1rem;
+}
+
+/* ---- pid/uid_map, pid/gid_map ---- */
+
+/* uid_map page: the ranges of ids, inside against outside — and gid_map, which
+   is the same three columns and so wears the same classes rather than a
+   duplicate set under another name. Renaming these moves both pages. */
+
+.uidmap__index {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  text-align: right;
+  width: 3ch;
+}
+
+.uidmap__id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.uidmap__table th:nth-child(2),
+.uidmap__table th:nth-child(3),
+.uidmap__table th:nth-child(4),
+.uidmap__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The explanation is prose, so it takes what the four narrow columns leave. */
+.uidmap__note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  min-width: 22rem;
+}
+
+/* An id that is itself on both sides, which is a hole punched on purpose. */
+.uidmap__row--passthrough .uidmap__id {
+  color: var(--muted);
+}
+
+/* ---- schedstat ---- */
+
+/* Ten columns, so this one scrolls rather than squeezing. */
+.sched {
+  overflow-x: auto;
+}
+
+.sched__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.sched__table th:not(:nth-child(3)):not(:last-child),
+.sched__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.sched__bar-cell {
+  width: 14%;
+  min-width: 4rem;
+}
+
+/* Each CPU's average wait against the worst, so latency reads down the table. */
+.sched__bar {
+  display: block;
+  width: 100%;
+  height: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.sched__segment {
+  display: block;
+  height: 100%;
+  background: var(--warn);
+}
+
+/* ---- scsi/sg/allow_dio ---- */
+
+/* One number that permits something rather than doing it, so the page is the
+   value, the four places it can come from, and the three answers the request
+   gets back afterwards. */
+
+.sgdio__value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+}
+
+.sgdio__fields th {
+  white-space: nowrap;
+}
+
+.sgdio-answers {
+  margin-top: 1rem;
+}
+
+.sgdio-answers__title {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.sgdio-answers__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.sgdio-answers__table th {
+  text-align: left;
+  font-weight: 500;
+  padding: 0.2rem 0.9rem 0.2rem 0;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.sgdio-answers__table td {
+  padding: 0.2rem 0;
+  vertical-align: top;
+  line-height: 1.4;
+}
+
+.sgdio-answers__name {
+  margin-left: 0.5rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* ---- scsi/sg/debug ---- */
+
+/* The one nested file of that directory, and the page is nested to match: a
+   card per device in use, a block per open descriptor inside it, and the
+   requests on that descriptor inside that. Depth is the point — this file is
+   about who is holding what, and the shape says so. */
+
+.sgdbg__header {
+  margin-bottom: 1rem;
+}
+
+.sgdbg__value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.sgdbg__device {
+  margin-bottom: 0.75rem;
+}
+
+.sgdbg__device-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.sgdbg__device-name {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.sgdbg__device-address {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  color: var(--accent);
+}
+
+/* The device's own numbers and each descriptor's, as labelled rows: the file
+   gives them as a run of `name=value` pairs, and a row apiece is the same
+   thing with room for what each one means. */
+.sgdbg__facts {
+  margin: 0.4rem 0 0.6rem;
+}
+
+.sgdbg__facts th {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.76rem;
+}
+
+/* One open file, indented under the device the way the file indents it. */
+.sgdbg__fd {
+  margin-top: 0.7rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--border);
+}
+
+.sgdbg__fd-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.sgdbg__fd-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+/* A reserve the default has moved past, which is a descriptor older than the
+   last write to def_reserved_size rather than a wrong number. */
+.sgdbg__old {
+  color: var(--warn);
+}
+
+.sgdbg__idle {
+  margin: 0;
+  font-size: 0.75rem;
+}
+
+.sgdbg__requests {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.76rem;
+}
+
+.sgdbg__requests th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 0.15rem 0.6rem 0.15rem 0;
+  white-space: nowrap;
+}
+
+.sgdbg__requests td {
+  padding: 0.2rem 0.6rem 0.2rem 0;
+  vertical-align: top;
+}
+
+.sgdbg__state,
+.sgdbg__packid,
+.sgdbg__code,
+.sgdbg__bytes,
+.sgdbg__timing {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.sgdbg__code {
+  margin-right: 0.4rem;
+}
+
+/* In flight is the row worth seeing first: everything else has already happened. */
+.sgdbg__request--active .sgdbg__state {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.sgdbg__request--received .sgdbg__state {
+  color: var(--warn);
+}
+
+/* How much of its timeout an in-flight request has used. */
+.sgdbg__bar {
+  display: block;
+  height: 0.25rem;
+  margin-top: 0.2rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 70%, transparent);
+  overflow: hidden;
+}
+
+.sgdbg__fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.sgdbg__fill--late {
+  background: var(--warn);
+}
+
+/* ---- scsi/sg/def_reserved_size ---- */
+
+/* One number, and four ways it can have got there. The table under the tiles is
+   those four, so the page answers "where does this value come from" rather than
+   only "what is it". */
+
+.sgsize__fields th {
+  white-space: nowrap;
+}
+
+.sgsize__value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+}
+
+/* ---- scsi/sg/device_hdr ---- */
+
+/* Nine names and nothing else. The file itself is one line, so it is shown as
+   one line — and under it, what each of those names is the name of, which is
+   the whole reason a page beats a `cat` here. */
+
+.sghdr__line {
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8rem;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.sghdr__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.sghdr__table th {
+  text-align: left;
+  font-weight: 500;
+  padding: 0.2rem 0.9rem 0.2rem 0;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.sghdr__table td {
+  padding: 0.2rem 0;
+  vertical-align: top;
+  line-height: 1.4;
+}
+
+/* The column number, which is what the name is worth knowing for: it says
+   which of the nine numbers next door goes under it. */
+.sghdr__position {
+  display: inline-block;
+  min-width: 1.2rem;
+  margin-right: 0.5rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.sghdr__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+}
+
+/* What the name does not say on its own. */
+.sghdr__caveat {
+  font-style: italic;
+}
+
+/* A name this app has no meaning for, which is a kernel that has moved. */
+.sghdr__row--unknown .sghdr__name {
+  color: var(--warn);
+}
+
+/* ---- scsi/sg/device_strs ---- */
+
+/* The names of the devices the file beside it counts: the same rows, the same
+   order, and the node in the same first column — the two files are one table
+   split in two, so the pages that read them line up. */
+
+.sgstr__node,
+.sgstr__vendor,
+.sgstr__model,
+.sgstr__rev {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.sgstr__node {
+  font-weight: 600;
+}
+
+/* The chips sit beside the value rather than under it, so a row stays a line. */
+.sgstr__vendor .chip,
+.sgstr__model .chip {
+  margin-left: 0.4rem;
+}
+
+.sgstr__absent .chip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.sgstr__row--absent .sgstr__node {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+/* A device whose INQUIRY has not been read: the fields are a placeholder
+   string, not a name, and should not be read as one. */
+.sgstr__row--unscanned .sgstr__vendor,
+.sgstr__row--unscanned .sgstr__model,
+.sgstr__row--unscanned .sgstr__rev {
+  color: var(--warn);
+}
+
+/* ---- scsi/sg/devices ---- */
+
+/* The generic driver's devices: a row each, and the row's own position in the
+   file is the node it names — which is why the node is the first column here
+   rather than a fact derived somewhere off to the side. */
+
+.sgdev__node,
+.sgdev__address,
+.sgdev__code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.sgdev__node {
+  font-weight: 600;
+}
+
+/* Inline rather than flex: `display: flex` on a `td` stops it being a table
+   cell, and the columns either side of it collapse into one. */
+.sgdev__type,
+.sgdev__gone {
+  font-size: 0.78rem;
+}
+
+.sgdev__code {
+  margin-right: 0.4rem;
+}
+
+.sgdev__gone .chip {
+  margin-right: 0.4rem;
+}
+
+/* Busy against the queue it is allowed, with the bar under the numbers rather
+   than instead of them: the numbers are the file, the bar is the reading. */
+.sgdev__queue {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  font-size: 0.78rem;
+}
+
+.sgdev__bar {
+  display: block;
+  height: 0.3rem;
+  margin-top: 0.2rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 70%, transparent);
+  overflow: hidden;
+}
+
+.sgdev__fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.sgdev__opens,
+.sgdev__online {
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+/* A number held open for a device that has gone, and a device that is here and
+   not being talked to — two different things, and neither is ordinary. */
+.sgdev__row--gone .sgdev__node {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.sgdev__row--offline .sgdev__node {
+  color: var(--warn);
+}
+
+/* ---- scsi/device_info ---- */
+
+/* The midlayer's blacklist: a row per entry, and the row is the whole record —
+   two INQUIRY fields and a mask. Unlike the page beside it this file is long
+   and every field is short, so it is a table, and what a flag *means* lives
+   once in the legend under it rather than in every row that sets it. */
+
+.devinfo__vendor,
+.devinfo__model,
+.devinfo__mask {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+/* The flex goes on a span inside the cell rather than on the cell: `display:
+   flex` on a `td` stops it being a table cell at all, and the columns either
+   side of it collapse into one. */
+.devinfo__cell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.4rem;
+  align-items: baseline;
+}
+
+.devinfo__model {
+  white-space: normal;
+}
+
+.devinfo__mask {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+/* A field whose spaces would otherwise be invisible keeps the quotes the file
+   puts round every one of them. */
+.devinfo__quoted {
+  color: var(--muted);
+  white-space: pre;
+}
+
+.devinfo__flags {
+  width: 40%;
+}
+
+/* An entry with no model, which is a prefix of every model: one line covering
+   a whole vendor is worth seeing as one. */
+.devinfo__row--any .devinfo__vendor {
+  color: var(--accent);
+}
+
+.devinfo-legend {
+  margin-top: 1rem;
+}
+
+.devinfo-legend__title {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.devinfo-legend__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.devinfo-legend__table th {
+  text-align: left;
+  font-weight: 500;
+  padding: 0.2rem 0.9rem 0.2rem 0;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.devinfo-legend__table td {
+  padding: 0.2rem 0;
+  vertical-align: top;
+  line-height: 1.4;
+}
+
+.devinfo-legend__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+}
+
+.devinfo-legend__bit {
+  margin-left: 0.4rem;
+  font-size: 0.72rem;
+}
+
+/* ---- scsi/scsi ---- */
+
+/* The attached-devices list. A device is three lines of file — an address, an
+   INQUIRY response and a type — and only the first of them is short, so this
+   page is a card per device rather than a row: five columns of long values
+   squeeze to nothing on a narrow window, and every fact here would rather carry
+   its own label than a column heading three cards away. The cards are grouped
+   by host, which is the grouping the file itself prints in. */
+
+.scsi-host {
+  margin-top: 1.5rem;
+}
+
+.scsi-host__name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.6rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* Three cards to a row where there is width for one, then two, then one — and
+   no breakpoint to say so. The ideal column is a third of the row less the two
+   gaps, which `auto-fill` then packs exactly three of; `clamp` stops that third
+   shrinking past what a card needs, and the moment it would, a column is
+   dropped instead. Same trick as every other grid here, with the ideal width
+   worked out rather than picked. */
+.scsi-grid {
+  --scsi-gap: 0.75rem;
+  --scsi-min: 16rem;
+
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(clamp(var(--scsi-min), (100% - 2 * var(--scsi-gap)) / 3, 100%), 1fr)
+  );
+  gap: var(--scsi-gap);
+}
+
+.scsi-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+/* The four numbers, which are one name: 0:0:0:0 is what sysfs calls the device
+   and what lsscsi prints in brackets. It leads the card because it is the only
+   handle the file gives. */
+.scsi-card__address {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--accent);
+}
+
+.scsi-card__title {
+  flex: 1 1 8rem;
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.scsi-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.scsi-card__fields {
+  margin-top: 0.5rem;
+}
+
+/* A value and the line that qualifies it, stacked: the note is what the number
+   or the name means, which is the half the file does not print. */
+.scsi-card__value {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.scsi-card__note {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.scsi-card__code,
+.scsi-card__node,
+.scsi-card__sysfs,
+.scsi-card__revision {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.scsi-card__revision {
+  font-variant-numeric: tabular-nums;
+}
+
+.scsi-card__sysfs {
+  word-break: break-all;
+  white-space: normal;
+}
+
+/* What the names and numbers on the cards mean, said once for the page: four
+   identical disks would otherwise carry four copies of the same prose. */
+.scsi-legend {
+  margin-top: 1.25rem;
+}
+
+.scsi-legend__title {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.scsi-legend__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.scsi-legend__table th {
+  text-align: left;
+  font-weight: 500;
+  padding: 0.2rem 0.9rem 0.2rem 0;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.scsi-legend__table td {
+  padding: 0.2rem 0;
+  vertical-align: top;
+  line-height: 1.4;
+}
+
+.scsi-legend__term {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+}
+
+.scsi-legend__code {
+  margin-left: 0.4rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+}
+
+/* A record whose lines could not be read is still the file talking, so it is
+   shown as it came rather than as a card of empty fields. */
+.scsi-card__unread {
+  margin-top: 0.6rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--warn);
+  border-radius: 8px;
+  font-size: 0.75rem;
+}
+
+.scsi-card__unread p {
+  margin: 0 0 0.35rem;
+}
+
+.scsi-card__unread pre {
+  margin: 0;
+  overflow-x: auto;
+  font-size: 0.72rem;
+}
+
+/* ---- slabinfo ---- */
+
+.slabs__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.slabs__table th:not(:first-child):not(:nth-child(3)),
+.slabs__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.slabs__bar-cell {
+  width: 20%;
+  min-width: 5rem;
+}
+
+/* Each cache's memory against the largest one, so the table reads as a chart. */
+.slabs__bar {
+  display: block;
+  width: 100%;
+  height: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.slabs__segment {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.slabs__row--empty .slabs__name,
+.slabs__row--empty .slabs__number {
+  opacity: 0.55;
+}
+
+/* ---- softirqs ---- */
+
+/* A column per CPU on top of the fixed ones, so this table can outgrow the
+   page on a machine with enough of them. */
+.sirq {
+  overflow-x: auto;
+}
+
+.sirq__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* The explanation is prose, so it takes what the counts leave. */
+.sirq__what {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.sirq__table th:not(:first-child):not(:nth-child(2)),
+.sirq__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The CPU that ran the most of a vector, so where the work lands reads down
+   the table. */
+.sirq__number--top {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* A vector that has never run — ordinary for HRTIMER and IRQ_POLL, so this is
+   dimmed rather than flagged. */
+.sirq__row--idle .sirq__name,
+.sirq__row--idle .sirq__what,
+.sirq__row--idle .sirq__number {
+  opacity: 0.55;
+}
+
+/* ---- stat ---- */
+
+.cpus__name {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cpus__table th:not(:first-child):not(:nth-child(3)),
+.cpus__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cpus__bar-cell {
+  width: 45%;
+}
+
+/* One bar per CPU, split into a segment per state. Widths are percentages of
+   the time since boot, so the segments always fill the bar exactly. */
+.cpus__bar {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  height: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-2);
+}
+
+.cpus__segment {
+  height: 100%;
+}
+
+/* ---- swaps ---- */
+
+/* Swaps page */
+
+.swap__name {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  word-break: break-all;
+}
+
+.swap__type {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.swap__table th:not(:first-child):not(:nth-child(2)),
+.swap__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The kernel picked this priority rather than being asked for it. */
+.swap__auto {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.swap__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 8rem;
+}
+
+.swap__meter {
+  flex: 1;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 70%, transparent);
+  overflow: hidden;
+}
+
+.swap__fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.swap__percent {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* Swapped on and never written to, which is the whole point of a lower
+   priority area. */
+.swap__row--untouched .swap__name,
+.swap__row--untouched .swap__type,
+.swap__row--untouched .swap__number {
+  opacity: 0.55;
+}
+
+/* ---- sys/user ---- */
+
+/* The twelve ucount limits, over two pages. A limit's own page is about its one
+   file — the number is in the summary, and the prose is what that number means
+   — while the listing of the directory they are all in carries the table: every
+   name against what it bounds and what it fails with. These classes are that
+   table's columns. */
+
+.ucount__name {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: baseline;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.ucount__bounds {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* The errno is the column that differs between them, so it reads as the
+   constant it is rather than as prose. */
+.ucount__errno {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* On the listing of the directory the twelve are in, that table is the section
+   they get instead of a grid of tiles, and each name is the link to that file's
+   page — the way every entry in a listing links at its own name.
+   It carries no link colour of its own: the row is what is being read, and a
+   dozen blue names in a column would read as decoration rather than as the
+   files they are. Hover and focus say it is a link, as the path trail does. */
+.ucount__link {
+  color: inherit;
+  text-decoration: none;
+  border-radius: 3px;
+}
+
+.ucount__link:hover,
+.ucount__link:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.ucount__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* The note under that table is about the twelve as a set, so it sits with them
+   rather than against the section below. */
+.explorer .ucount__table {
+  margin-bottom: 0;
+}
+
+/* ---- sys/vm ---- */
+
+/* The listing of the memory manager's control panel: a table per area of it,
+   a row per file — the name, what it sets, and what it is set in. The units
+   column is why the table is worth the room: two files a line apart may be a
+   percentage and a count of bytes, and the name alone does not say which. */
+
+.vmtune__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.vmtune__sets {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* What it is set in, which reads as the unit it is rather than as prose. */
+.vmtune__unit {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* The name is the link to the file's own page, the way every entry in a
+   listing links at its own name — and it carries no link colour of its own,
+   for the same reason the limits table's names do not: the row is what is
+   being read. */
+.vmtune__link {
+  color: inherit;
+  text-decoration: none;
+  border-radius: 3px;
+}
+
+.vmtune__link:hover,
+.vmtune__link:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.vmtune__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* Each group's table is the whole of its section, as the limits table is. */
+.explorer .vmtune__table {
+  margin-bottom: 0;
+}
+
+/* ---- sysvipc/shm ---- */
+
+/*
+ * The shared memory page: a row per segment, eleven columns of it. Three of
+ * them are identifiers the file prints as numbers and one is a mode printed in
+ * octal, so they read as the fixed-width fields they are; everything that is an
+ * amount lines up on its digits to its right.
+ */
+.shm__key,
+.shm__id,
+.shm__perms,
+.shm__pid,
+.shm__owner,
+.shm__time {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.shm__key {
+  font-weight: 600;
+}
+
+/* The mode, and the SHM_* flags above it that came out of the same field. */
+.shm__perms {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.shm__owner {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.shm__id,
+.shm__pid,
+.shm__number {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.shm__number {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+}
+
+.shm__table th:nth-child(2),
+.shm__table th:nth-child(4),
+.shm__table th:nth-child(5),
+.shm__table th:nth-child(6),
+.shm__table th:nth-child(7),
+.shm__table th:nth-child(8),
+.shm__table th:nth-child(9) {
+  text-align: right;
+}
+
+/* A figure that is worth reading because it is not zero: swap, or no attachment. */
+.shm__hit {
+  color: var(--warn);
+  font-weight: 600;
+}
+
+/*
+ * Nothing attached and nothing marked to remove it: memory the machine is
+ * holding for nobody until a reboot. It is the one row worth spotting from
+ * across the table.
+ */
+.shm__row--orphaned .shm__key,
+.shm__row--orphaned .shm__id {
+  color: var(--warn);
+}
+
+/* ---- sysvipc/msg ---- */
+
+/*
+ * The message queue page: the same identifiers as the other two IPC pages, and
+ * then the pair of live figures — messages waiting and the bytes they are —
+ * which are what this file is read for.
+ */
+.msg__key,
+.msg__id,
+.msg__perms,
+.msg__pid,
+.msg__owner,
+.msg__time {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.msg__key {
+  font-weight: 600;
+}
+
+.msg__owner {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.msg__id,
+.msg__pid,
+.msg__number {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* The two figures that change while the file is being read, and their chips. */
+.msg__number {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+}
+
+.msg__table th:nth-child(2),
+.msg__table th:nth-child(4),
+.msg__table th:nth-child(5),
+.msg__table th:nth-child(6),
+.msg__table th:nth-child(7) {
+  text-align: right;
+}
+
+/* A queue at its limit, or messages nothing is coming for. */
+.msg__hit {
+  color: var(--warn);
+  font-weight: 600;
+}
+
+/*
+ * Sent to and never read from: a receiver that never started, which is the row
+ * worth spotting from across the table.
+ */
+.msg__row--stalled .msg__key,
+.msg__row--stalled .msg__id {
+  color: var(--warn);
+}
+
+/* ---- sysvipc/sem ---- */
+
+/*
+ * The semaphore page, which is the shm table with four columns fewer: the same
+ * identifiers printed the same way, and then a size, an owner and two times.
+ */
+.sem__key,
+.sem__id,
+.sem__perms,
+.sem__owner,
+.sem__time {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.sem__key {
+  font-weight: 600;
+}
+
+/* A time and the chip that says what moved it, on one line. */
+.sem__owner,
+.sem__time {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.sem__id,
+.sem__number {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* The size of the set, which is the one figure here that is a count. */
+.sem__number {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+}
+
+.sem__table th:nth-child(2),
+.sem__table th:nth-child(4) {
+  text-align: right;
+}
+
+/*
+ * Created and never operated on: the nearest this file comes to saying nothing
+ * is using a set, since it has no attach count to say it with.
+ */
+.sem__row--unused .sem__key,
+.sem__row--unused .sem__id {
+  color: var(--warn);
+}
+
+/* ---- timer_list ---- */
+
+/* Timer list page: a card per CPU, then one per tick device */
+
+.tl__name {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0 0 0.6rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9rem;
+}
+
+.tl__hw {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.tl__stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.85rem;
+  font-size: 0.8rem;
+}
+
+.tl__base {
+  margin-top: 0.85rem;
+}
+
+.tl__baseName {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin: 0 0 0.35rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.tl__callback {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.tl__table th:not(:first-child),
+.tl__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Zeroes under kptr_restrict, and a long hex string otherwise. */
+.tl__addr {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  text-align: right;
+  word-break: break-all;
+}
+
+.tl__none,
+.tl__empty {
+  margin: 0.5rem 0 0;
+  font-size: 0.78rem;
+}
+
+/* The clock event device's own fields, kept as the kernel names them. */
+.tl__fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.3rem 1rem;
+  margin: 0;
+  font-size: 0.76rem;
+}
+
+.tl__field {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.2rem;
+}
+
+.tl__field dt {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.tl__field dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  word-break: break-all;
+}
+
+/* ---- tty/drivers ---- */
+
+.tty__name,
+.tty__device {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.tty__name {
+  font-weight: 600;
+}
+
+/* The device numbers, which read as numbers rather than as text. */
+.tty__major,
+.tty__minors {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.tty__table th:nth-child(3),
+.tty__table th:nth-child(4) {
+  text-align: right;
+}
+
+/* How many numbers the range covers, beside the range itself. */
+.tty__count {
+  font-size: 0.76rem;
+}
+
+.tty__type {
+  width: 10rem;
+}
+
+/*
+ * The four nodes the kernel prints ahead of the drivers. They are in the same
+ * table because that is where the file puts them, and dimmed because they are
+ * not what the rest of the table is a list of.
+ */
+.tty__row--pseudo .tty__name,
+.tty__row--pseudo .tty__device,
+.tty__row--pseudo .tty__major,
+.tty__row--pseudo .tty__minors {
+  color: var(--muted);
+}
+
+/* ---- tty/ldiscs ---- */
+
+/* The N_* number, which is what TIOCSETD takes and how the table is keyed. */
+.ldisc__number {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  width: 3rem;
+}
+
+.ldisc__table th:first-child {
+  text-align: right;
+}
+
+.ldisc__name,
+.ldisc__constant {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.ldisc__name {
+  font-weight: 600;
+}
+
+.ldisc__constant {
+  color: var(--muted);
+}
+
+/* What the discipline does, which is the only column that is prose. */
+.ldisc__what {
+  min-width: 20rem;
+}
+
+/* The release that deleted the driver, beside the description of it. */
+.ldisc__gone {
+  margin-left: 0.35rem;
+  white-space: nowrap;
+}
+
+/* The one every tty starts on, which is the answer this file usually holds. */
+.ldisc__row--default .ldisc__name {
+  color: var(--accent);
+}
+
+/* ---- uid_io/stats ---- */
+
+.uidio__uid,
+.uidio__number,
+.uidio__figures {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.uidio__uid {
+  white-space: nowrap;
+}
+
+.uidio__uid > .chip {
+  margin-left: 0.35rem;
+  white-space: nowrap;
+}
+
+.uidio__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.uidio__table th:first-child,
+.uidio__uid {
+  width: 12rem;
+}
+
+.uidio__table th:nth-child(2),
+.uidio__table th:nth-child(3),
+.uidio__table th:nth-child(4),
+.uidio__number {
+  width: 9rem;
+}
+
+.uidio__table th:not(:last-child) {
+  text-align: right;
+}
+
+.uidio__table th:first-child {
+  text-align: left;
+}
+
+/* What the block layer moved, under what went through the calls: the two are
+   the same traffic counted at two depths, so they read as one column. */
+.uidio__block {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.uidio__states {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 8rem;
+}
+
+.uidio__bar {
+  display: block;
+  flex: 1;
+  min-width: 4rem;
+  height: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  /* The bar is the split itself: what is filled is foreground and what is not
+     is background, so the ground has to read as the other half. */
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.uidio__segment {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.uidio__figures {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---- uid_time_in_state ---- */
+
+.uidtis__uid,
+.uidtis__number,
+.uidtis__figures {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.uidtis__uid {
+  white-space: nowrap;
+}
+
+.uidtis__uid > .chip {
+  margin-left: 0.35rem;
+  white-space: nowrap;
+}
+
+.uidtis__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.uidtis__table th:first-child,
+.uidtis__uid {
+  width: 12rem;
+}
+
+.uidtis__table th:nth-child(2),
+.uidtis__table th:last-child,
+.uidtis__number {
+  width: 7rem;
+  text-align: right;
+}
+
+/* A cluster's steps as one bar, with what they add up to underneath it: the
+   shape is the readable part and the figures are what the file actually says. */
+.uidtis__cluster {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 8rem;
+}
+
+.uidtis__bar {
+  display: flex;
+  height: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.uidtis__step {
+  display: block;
+  height: 100%;
+}
+
+/*
+ * Coloured by where the step sits in its cluster rather than by how much time
+ * is at it: the bottom of a cluster is the cheap end and the top is the one
+ * that costs the most for what it delivers, so a bar leaning right is the
+ * finding.
+ */
+.uidtis__step--low {
+  background: var(--muted);
+}
+
+.uidtis__step--mid {
+  background: var(--accent);
+}
+
+.uidtis__step--high {
+  background: var(--warn);
+}
+
+.uidtis__figures {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---- uptime ---- */
+
+/* Uptime page: what the idle total implies, per candidate CPU count */
+
+.uptime__cpus {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.uptime__table th:not(:first-child),
+.uptime__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The fewest CPUs that could have produced this much idle — the only row the
+   file actually pins down. */
+.uptime__row--fewest .uptime__cpus,
+.uptime__row--fewest .uptime__number {
+  font-weight: 600;
+}
+
+/* ---- version ---- */
+
+/* One compiler per line: the banner often names both a compiler and a linker. */
+.version__toolchain {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- version_signature ---- */
+
+/* Version signature page: the line taken apart, a row per piece */
+
+.vsig__label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.vsig__value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* The explanation is prose, so it takes what the other two leave. */
+.vsig__note {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* ---- vmallocinfo ---- */
+
+/* Vmallocinfo page: a wide table of ranges, and one of callers above it */
+
+.vm {
+  overflow-x: auto;
+}
+
+.vm__addr,
+.vm__phys {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.vm__caller {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  word-break: break-all;
+}
+
+.vm__table th:not(:first-child):not(:nth-child(3)):not(:last-child),
+.vm__callers th:not(:first-child),
+.vm__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.vm__flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+}
+
+/* ---- vmstat ---- */
+
+/* Vmstat page: levels in one table, counters in one per family */
+
+.vs__heading {
+  margin: 1.75rem 0 0.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.vs__family {
+  margin-top: 1.25rem;
+}
+
+.vs__familyName {
+  margin: 0 0 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.vs__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  word-break: break-all;
+}
+
+.vs__table th:nth-child(2),
+.vs__table th:nth-child(3),
+.vs__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The explanation is prose, so it takes what the numbers leave. */
+.vs__note {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* A field sitting at zero is ordinary — most of this file is zeroes. */
+.vs__row--zero .vs__name,
+.vs__row--zero .vs__number {
+  opacity: 0.55;
+}
+
+/* ---- zoneinfo ---- */
+
+/* Zoneinfo page: a card per zone, with its watermarks drawn to scale */
+
+.zi__name {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0 0 0.6rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9rem;
+}
+
+.zi__printedUnder,
+.zi__pagesets {
+  margin: 0 0 0.6rem;
+  max-width: 70ch;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.zi__marks {
+  margin-bottom: 0.85rem;
+}
+
+/* Scaled to the high watermark: past that the exact figure stops mattering. */
+.zi__bar {
+  position: relative;
+  display: block;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 70%, transparent);
+  overflow: hidden;
+}
+
+.zi__fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.zi__mark {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: var(--fg);
+  opacity: 0.75;
+}
+
+.zi__mark--min {
+  background: var(--warn);
+  opacity: 1;
+}
+
+.zi__legend {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.zi__key {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.zi__table th:nth-child(2),
+.zi__table th:nth-child(3),
+.zi__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.zi__note {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* Worked out here rather than printed by the kernel. */
+.zi__row--derived .zi__key {
+  font-style: italic;
+}
+
+.zi__protection,
+.zi__tail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.75rem 0 0;
+  font-size: 0.78rem;
+}

@@ -1,0 +1,18 @@
+1608 1546 0:139 / / rw,relatime master:389 - overlay overlay rw,lowerdir=/var/lib/docker/overlay2/l/QK2VF:/var/lib/docker/overlay2/l/7BJ4M,upperdir=/var/lib/docker/overlay2/9c1f/diff,workdir=/var/lib/docker/overlay2/9c1f/work
+1609 1608 0:142 / /proc rw,nosuid,nodev,noexec,relatime - proc proc rw
+1610 1608 0:143 / /dev rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755,inode64
+1611 1610 0:144 / /dev/pts rw,nosuid,noexec,relatime - devpts devpts rw,gid=5,mode=620,ptmxmode=666
+1612 1610 0:138 / /dev/shm rw,nosuid,nodev,noexec,relatime - tmpfs shm rw,size=65536k,inode64
+1613 1608 0:145 / /sys ro,nosuid,nodev,noexec,relatime - sysfs sysfs ro
+1614 1613 0:30 / /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime - cgroup2 cgroup rw
+1615 1608 8:2 /var/lib/docker/containers/9c1fa0/resolv.conf /etc/resolv.conf rw,relatime - ext4 /dev/sda2 rw
+1616 1608 8:2 /var/lib/docker/containers/9c1fa0/hostname /etc/hostname rw,relatime - ext4 /dev/sda2 rw
+1617 1608 8:2 /var/lib/docker/containers/9c1fa0/hosts /etc/hosts rw,relatime - ext4 /dev/sda2 rw
+1618 1608 8:16 /srv/app /srv/app ro,relatime - ext4 /dev/sdb ro
+1619 1609 0:146 / /proc/asound ro,relatime - tmpfs tmpfs ro,inode64
+1620 1609 0:146 / /proc/acpi ro,relatime - tmpfs tmpfs ro,inode64
+1621 1609 0:142 /kcore /proc/kcore rw,nosuid,nodev,noexec,relatime - proc proc rw
+1622 1609 0:142 /keys /proc/keys rw,nosuid,nodev,noexec,relatime - proc proc rw
+1623 1609 0:142 /timer_list /proc/timer_list rw,nosuid,nodev,noexec,relatime - proc proc rw
+1624 1609 0:147 / /proc/scsi ro,relatime - tmpfs tmpfs ro,inode64
+1625 1613 0:148 / /sys/firmware ro,relatime - tmpfs tmpfs ro,inode64

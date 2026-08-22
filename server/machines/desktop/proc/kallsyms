@@ -1,0 +1,15 @@
+ffffffff81000000 T startup_64
+ffffffff81002000 T do_syscall_64
+ffffffff82000000 D init_task
+ffffffff82400000 B __bss_start
+ffffffffc0000000 t nvme_probe	[nvme]
+ffffffffc0000200 T nvme_complete_rq	[nvme]
+ffffffffc0000640 T nvme_wait_reset	[nvme]
+ffffffffc0001000 d nvme_ctrl_class	[nvme]
+ffffffffc0001800 b nvme_subsystems	[nvme]
+ffffffffc0002000 t ext4_readdir	[ext4]
+ffffffffc0002400 T ext4_bread	[ext4]
+ffffffffc0002900 t ext4_fill_super	[ext4]
+ffffffffc0003000 b ext4_li_info	[ext4]
+ffffffffc0010000 t vboxguest_probe	[vboxguest]
+ffffffffc0010400 T vbg_hgcm_connect	[vboxguest]

@@ -1,0 +1,1 @@
+A 2.6 kernel at 100 Hz, with the 1024 Hz RTC timer the kernel has since dropped and no hrtimer yet

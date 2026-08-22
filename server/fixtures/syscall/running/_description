@@ -1,0 +1,1 @@
+Busy on a CPU — the registers cannot be sampled, so the kernel says so rather than guessing

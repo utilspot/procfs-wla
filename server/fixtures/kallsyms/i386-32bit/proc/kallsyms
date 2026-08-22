@@ -1,0 +1,10 @@
+c1000000 T startup_32
+c1000100 t verify_cpu
+c1001000 T do_int80_syscall_32
+c1400000 R __start_rodata
+c1400080 R linux_banner
+c1800000 D init_task
+c1900000 B __bss_start
+c1901000 b initcall_done
+c9000000 t rtl8139_probe	[8139too]
+c9000400 T rtl8139_interrupt	[8139too]

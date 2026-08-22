@@ -1,0 +1,45 @@
+{
+  "name": "procfs-wla",
+  "version": "1.0.0",
+  "description": "A page per /proc entry, parsing what the kernel prints there",
+  "license": "MIT",
+  "type": "module",
+  "homepage": "https://github.com/utilspot/procfs-wla",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/utilspot/procfs-wla.git"
+  },
+  "scripts": {
+    "dev": "concurrently -n server,client -c magenta,cyan \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:client": "tsx scripts/vite.ts",
+    "dev:server": "tsx watch server/index.ts",
+    "build": "tsc -b && tsx scripts/build.ts",
+    "preview": "tsx scripts/vite.ts preview",
+    "bitmake": "npx bitmake build",
+    "server": "./build/package/bin/procfs_server",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.9.1",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
+    "@vitejs/plugin-react": "^5.0.4",
+    "bitmake": "^0.0.1-develop.15",
+    "concurrently": "^9.2.1",
+    "express": "^5.1.0",
+    "jsdom": "^27.0.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.9",
+    "vitest": "^3.2.4"
+  }
+}

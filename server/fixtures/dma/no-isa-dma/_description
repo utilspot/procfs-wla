@@ -1,0 +1,1 @@
+Modern ARM64 or similar — the kernel reports "No DMA" because there is no ISA controller at all

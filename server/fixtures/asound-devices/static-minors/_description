@@ -1,0 +1,1 @@
+A kernel built without dynamic minors, where the minor is computed from the card and the type rather than handed out

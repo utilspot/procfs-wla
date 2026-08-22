@@ -1,0 +1,1 @@
+Kernel old enough to still register callout devices — /dev/cua beside /dev/ttyS, and the BSD-style pty names

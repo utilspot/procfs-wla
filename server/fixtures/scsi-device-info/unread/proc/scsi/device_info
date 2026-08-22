@@ -1,0 +1,4 @@
+'HITACHI' 'DK312C' 0x1
+'MAXTOR' 'XT-3280' 0x1
+this line is not an entry
+'SGI' 'RAID5' 0x2

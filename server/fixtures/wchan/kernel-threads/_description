@@ -1,0 +1,1 @@
+Kernel threads at rest — each parked in the loop it spends its life in, which is not a stall

@@ -1,0 +1,1 @@
+A microphone and nothing else — no playback field at all, since the kernel prints a stream only when it has substreams

@@ -1,0 +1,7 @@
+Personalities : [raid1] [raid10] 
+md0 : active raid10 sde1[4] sdd1[3] sdc1[2] sdb1[1] sda1[0]
+      1953260544 blocks super 1.2 512K chunks 2 near-copies [5/4] [UUUU_]
+      [==>..................]  recovery = 12.7% (248064000/1953260544) finish=141.2min speed=201234K/sec
+      bitmap: 5/15 pages [20KB], 65536KB chunk
+
+unused devices: <none>

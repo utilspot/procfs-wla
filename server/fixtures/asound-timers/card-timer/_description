@@ -1,0 +1,1 @@
+A card with a timer of its own — a C line beside the global ones, ticking on the card's own clock rather than the kernel's

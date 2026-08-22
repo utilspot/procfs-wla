@@ -1,0 +1,22 @@
+Attached devices:
+Host: scsi0 Channel: 00 Id: 00 Lun: 00
+  Vendor: SEAGATE  Model: ST4000NM0035     Rev: TT31
+  Type:   Direct-Access                    ANSI  SCSI revision: 06
+Host: scsi0 Channel: 00 Id: 01 Lun: 00
+  Vendor: SEAGATE  Model: ST4000NM0035     Rev: TT31
+  Type:   Direct-Access                    ANSI  SCSI revision: 06
+Host: scsi0 Channel: 00 Id: 02 Lun: 00
+  Vendor: SEAGATE  Model: ST4000NM0035     Rev: TT31
+  Type:   Direct-Access                    ANSI  SCSI revision: 06
+Host: scsi0 Channel: 00 Id: 03 Lun: 00
+  Vendor: SEAGATE  Model: ST4000NM0035     Rev: TT31
+  Type:   Direct-Access                    ANSI  SCSI revision: 06
+Host: scsi0 Channel: 00 Id: 08 Lun: 00
+  Vendor: LSI      Model: SMP2X36          Rev: 0601
+  Type:   Enclosure                        ANSI  SCSI revision: 05
+Host: scsi0 Channel: 03 Id: 00 Lun: 00
+  Vendor: AVAGO    Model: MR9361-8i        Rev: 4.68
+  Type:   RAID                             ANSI  SCSI revision: 05
+Host: scsi6 Channel: 00 Id: 00 Lun: 00
+  Vendor: AMI      Model: Virtual CDROM0   Rev: 1.00
+  Type:   CD-ROM                           ANSI  SCSI revision: 00

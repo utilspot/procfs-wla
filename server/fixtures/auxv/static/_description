@@ -1,0 +1,1 @@
+A statically linked program — no dynamic loader to map, so AT_BASE is 0 and the program headers are at the address it was linked for

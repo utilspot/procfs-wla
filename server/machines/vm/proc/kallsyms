@@ -1,0 +1,13 @@
+0000000000000000 A __per_cpu_start
+0000000000004000 a fixed_percpu_data
+ffffffff81000000 T startup_64
+ffffffff81100000 W __weak_default_handler
+ffffffff81100100 w mcount
+ffffffff81200000 V __gnu_lto_v1
+ffffffff81300000 N __debug_note_start
+ffffffff81400000 R linux_banner
+ffffffff81500000 r __ksymtab_strings
+ffffffff82000000 D system_state
+ffffffff82100000 b static_key_initialized
+ffffffff82200000 i __indirect_thunk
+ffffffff82300000 ? __unnamed_type

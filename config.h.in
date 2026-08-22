@@ -1,0 +1,11 @@
+/* config.h.  Generated from cconfig.h.in by CMake.  */
+
+#cmakedefine PROCFS_ASSETS_DIR  "@PROCFS_ASSETS_DIR@"
+#cmakedefine PROCFS_BASE_DIR    "@PROCFS_BASE_DIR@"
+#cmakedefine PROCFS_BASE_URL    "@PROCFS_BASE_URL@"
+#cmakedefine PROCFS_ROOT_URL    "@PROCFS_ROOT_URL@"
+#cmakedefine PROCFS_SERVICE_URL "@PROCFS_SERVICE_URL@"
+#cmakedefine PROCFS_DIRAPI_URL  "@PROCFS_DIRAPI_URL@"
+#cmakedefine PROCFS_FILEAPI_URL "@PROCFS_FILEAPI_URL@"
+#cmakedefine PROCFS_FILE_HTML   "@PROCFS_FILE_HTML@"
+#cmakedefine PROCFS_DIR_HTML    "@PROCFS_DIR_HTML@"

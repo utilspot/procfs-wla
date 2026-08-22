@@ -1,0 +1,17 @@
+0000000000000000 A __per_cpu_start
+0000000000004000 A fixed_percpu_data
+0000000000010000 A __per_cpu_end
+ffffffff81000000 T startup_64
+ffffffff81000030 T secondary_startup_64
+ffffffff81000110 t verify_cpu
+ffffffff81001000 T entry_SYSCALL_64
+ffffffff81001100 t syscall_return_via_sysret
+ffffffff81002000 T do_syscall_64
+ffffffff81002340 t do_syscall_x64
+ffffffff81c00000 R __start_rodata
+ffffffff81c00100 R linux_banner
+ffffffff81c40000 r kallsyms_names
+ffffffff82000000 D init_task
+ffffffff82001000 d cpu_hotplug_state
+ffffffff82400000 B __bss_start
+ffffffff82401000 b initcall_done

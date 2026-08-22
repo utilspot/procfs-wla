@@ -1,0 +1,4 @@
+Filename				Type		Size		Used		Priority
+/swapfile                               file		2097148		1884416		-2
+/mnt/data/swap\040file                  file		4194300		221184		-3
+/var/lib/machines/container-01/swapfile.img file		1048572		0		-4

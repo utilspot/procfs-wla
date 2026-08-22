@@ -1,0 +1,20 @@
+00000000-00000fff : Reserved
+00001000-00057fff : System RAM
+00058000-00058fff : Reserved
+00059000-0009ffff : System RAM
+000a0000-000fffff : Reserved
+00100000-6f7fffff : System RAM
+  01000000-02001fff : Kernel code
+  02200000-02dfffff : Kernel rodata
+  03000000-0338ffff : Kernel data
+  03574000-042fffff : Kernel bss
+6f800000-6fffffff : Reserved
+70000000-8fffffff : ACPI Non-volatile Storage
+90000000-9fffffff : Reserved
+c0000000-cfffffff : PCI MMCONFIG 0000 [bus 00-ff]
+fed00000-fed003ff : HPET 0
+fee00000-fee00fff : Local APIC
+100000000-207fffffff : System RAM
+2080000000-407fffffff : System RAM
+4080000000-4c7fffffff : Persistent Memory
+  4080000000-4c7fffffff : namespace0.0

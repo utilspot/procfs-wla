@@ -1,0 +1,1 @@
+Raspberry Pi — six module parameters, a PARTUUID root, and no BOOT_IMAGE since the firmware loads the kernel

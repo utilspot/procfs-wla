@@ -1,0 +1,1 @@
+One PCM device with four substreams behind it — substreams get no node of their own, so there is one minor for all four

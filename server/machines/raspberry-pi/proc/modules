@@ -1,0 +1,10 @@
+brcmfmac 327680 0 - Live 0xffffffffc0000000
+brcmutil 16384 1 brcmfmac, Live 0xffffffffc0021000
+cfg80211 999424 1 brcmfmac, Live 0xffffffffc0042000
+bcm2835_v4l2 49152 0 - Live 0xffffffffc0063000
+bcm2835_codec 40960 0 - Live 0xffffffffc0084000
+videobuf2_v4l2 32768 2 bcm2835_v4l2,bcm2835_codec, Live 0xffffffffc00a5000
+videobuf2_common 61440 1 videobuf2_v4l2, Live 0xffffffffc00c6000
+snd_bcm2835 24576 1 - Live 0xffffffffc00e7000
+i2c_bcm2835 16384 0 - Live 0xffffffffc0108000
+spi_bcm2835 20480 0 - Live 0xffffffffc0129000

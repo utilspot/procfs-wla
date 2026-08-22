@@ -1,0 +1,22 @@
+00000000-00000fff : Reserved
+00001000-0009fbff : System RAM
+0009fc00-0009ffff : Reserved
+000a0000-000bffff : PCI Bus 0000:00
+000f0000-000fffff : Reserved
+  000f0000-000fffff : System ROM
+00100000-bffdcfff : System RAM
+  01000000-01c00fff : Kernel code
+  01c01000-0223ffff : Kernel rodata
+  02400000-025bffff : Kernel data
+  02a3f000-02ffffff : Kernel bss
+bffdd000-bfffffff : Reserved
+c0000000-febfffff : PCI Bus 0000:00
+  fd000000-fdffffff : 0000:00:02.0
+    fd000000-fdffffff : virtio-pci-modern
+  febd0000-febd0fff : 0000:00:03.0
+    febd0000-febd0fff : virtio-pci-modern
+fec00000-fec003ff : IOAPIC 0
+fed00000-fed003ff : HPET 0
+fee00000-fee00fff : Local APIC
+fffc0000-ffffffff : Reserved
+100000000-13fffffff : System RAM

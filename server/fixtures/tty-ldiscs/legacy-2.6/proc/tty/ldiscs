@@ -1,0 +1,11 @@
+n_tty       0
+n_slip      1
+n_mouse     2
+n_ppp       3
+n_strip     4
+n_ax25      5
+n_x25       6
+n_6pack     7
+n_irda     11
+n_hdlc     13
+n_hci      15

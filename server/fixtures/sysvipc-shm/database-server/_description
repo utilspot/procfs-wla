@@ -1,0 +1,1 @@
+A database host — 32 GiB behind huge pages, a locked segment, and PostgreSQL 56 bytes that cost a whole page

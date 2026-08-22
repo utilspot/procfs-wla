@@ -1,0 +1,7 @@
+kernel.root = "/dev/vda2"
+i915.enable_psr = "0"
+i915.enable_guc = "3"
+nvme_core.io_timeout = "4294967295"
+usbcore.autosuspend = "-1"
+snd_hda_intel.model = "generic"
+scsi_mod.scan = "sync"

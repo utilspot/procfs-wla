@@ -1,0 +1,1 @@
+A 2.6-era drivers/char/rtc.c — the epoch, one alarm line with wildcards in it, and 24hr read off the control register

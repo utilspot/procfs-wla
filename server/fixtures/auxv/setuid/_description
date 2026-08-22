@@ -1,0 +1,1 @@
+A set-uid program — exec raised the effective uid, and AT_SECURE with it, which is what makes the C library ignore LD_PRELOAD

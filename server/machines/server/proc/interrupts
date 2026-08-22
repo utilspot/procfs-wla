@@ -1,0 +1,12 @@
+                  CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7
+  0:         24          0          0          0          0          0          0          0   IO-APIC   2-edge      timer
+  9:          0          0          0          0          0          0          0          0   IO-APIC   9-fasteoi   acpi
+130:    8472103         12          8          4          2          0          0          0   PCI-MSI 524288-edge      nvme0q1
+131:         11    8391204          9          3          1          0          0          0   PCI-MSI 524289-edge      nvme0q2
+132:          8         14    8294718          7          2          1          0          0   PCI-MSI 524290-edge      nvme0q3
+133:          6          9         12    8183947          4          2          0          0   PCI-MSI 524291-edge      nvme0q4
+140:    1284736    1293841    1287412    1290183    1284019    1291847    1288472    1290471   PCI-MSI 1048576-edge      mlx5_comp0@pci:0000:03:00.0
+LOC:   18472103   18391204   18402471   18377291   18412093   18398471   18405231   18391847   Local timer interrupts
+RES:    2847193    2874120    2861034    2859410    2848271    2866102    2853918    2860447   Rescheduling interrupts
+TLB:     928410     930120     929040     928710     929381     930014     928847     929203   TLB shootdowns
+ERR:          0

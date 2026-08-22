@@ -1,0 +1,1 @@
+The header alone, which is what an idle machine prints: nothing has a /dev/sg* open, so no device has a block here

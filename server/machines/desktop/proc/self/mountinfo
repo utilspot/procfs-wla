@@ -1,0 +1,32 @@
+26 31 0:23 / /sys rw,nosuid,nodev,noexec,relatime shared:7 - sysfs sysfs rw
+27 31 0:24 / /proc rw,nosuid,nodev,noexec,relatime shared:12 - proc proc rw
+28 31 0:7 / /dev rw,nosuid,relatime shared:2 - devtmpfs udev rw,size=5284812k,nr_inodes=1321203,mode=755,inode64
+29 28 0:25 / /dev/pts rw,nosuid,noexec,relatime shared:3 - devpts devpts rw,gid=5,mode=620,ptmxmode=000
+30 31 0:26 / /run rw,nosuid,nodev,noexec,relatime shared:5 - tmpfs tmpfs rw,size=1218792k,mode=755,inode64
+31 2 8:2 / / rw,relatime shared:1 - ext4 /dev/sda2 rw
+32 26 0:8 / /sys/kernel/security rw,nosuid,nodev,noexec,relatime shared:8 - securityfs securityfs rw
+33 28 0:27 / /dev/shm rw,nosuid,nodev shared:4 - tmpfs tmpfs rw,inode64
+34 30 0:28 / /run/lock rw,nosuid,nodev,noexec,relatime shared:6 - tmpfs tmpfs rw,size=5120k,inode64
+35 26 0:29 / /sys/fs/cgroup rw,nosuid,nodev,noexec,relatime shared:9 - cgroup2 cgroup2 rw,nsdelegate,memory_recursiveprot
+36 26 0:30 / /sys/fs/pstore rw,nosuid,nodev,noexec,relatime shared:10 - pstore none rw
+37 26 0:31 / /sys/fs/bpf rw,nosuid,nodev,noexec,relatime shared:11 - bpf bpf rw,mode=700
+38 27 0:32 / /proc/sys/fs/binfmt_misc rw,relatime shared:13 - autofs systemd-1 rw,fd=32,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=378
+39 26 0:9 / /sys/kernel/debug rw,nosuid,nodev,noexec,relatime shared:14 - debugfs debugfs rw
+40 28 0:33 / /dev/hugepages rw,nosuid,nodev,relatime shared:15 - hugetlbfs hugetlbfs rw,pagesize=2M
+41 26 0:14 / /sys/kernel/tracing rw,nosuid,nodev,noexec,relatime shared:16 - tracefs tracefs rw
+42 28 0:22 / /dev/mqueue rw,nosuid,nodev,noexec,relatime shared:17 - mqueue mqueue rw
+43 26 0:34 / /sys/fs/fuse/connections rw,nosuid,nodev,noexec,relatime shared:18 - fusectl fusectl rw
+64 26 0:20 / /sys/kernel/config rw,nosuid,nodev,noexec,relatime shared:19 - configfs configfs rw
+44 31 7:0 / /snap/bare/5 ro,nodev,relatime shared:20 - squashfs /dev/loop0 ro,errors=continue,threads=single
+45 31 7:1 / /snap/firefox/8736 ro,nodev,relatime shared:21 - squashfs /dev/loop1 ro,errors=continue,threads=single
+47 31 7:3 / /snap/core22/2411 ro,nodev,relatime shared:23 - squashfs /dev/loop3 ro,errors=continue,threads=single
+48 31 7:4 / /snap/snapd/27591 ro,nodev,relatime shared:24 - squashfs /dev/loop4 ro,errors=continue,threads=single
+57 31 8:1 / /boot/efi rw,relatime - vfat /dev/sda1 rw,fmask=0077,dmask=0077,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro
+58 31 8:16 / /home rw,relatime shared:44 - ext4 /dev/sdb rw
+271 38 0:39 / /proc/sys/fs/binfmt_misc rw,nosuid,nodev,noexec,relatime shared:96 - binfmt_misc binfmt_misc rw
+98 30 0:26 /snapd/ns /run/snapd/ns rw,nosuid,nodev,noexec,relatime - tmpfs tmpfs rw,size=1218792k,mode=755,inode64
+218 98 0:5 mnt:[4026532369] /run/snapd/ns/cups.mnt rw - nsfs nsfs rw
+46 30 0:54 / /run/user/1000 rw,nosuid,nodev,relatime shared:22 - tmpfs tmpfs rw,size=1218788k,nr_inodes=304697,mode=700,uid=1000,gid=1000,inode64
+480 46 0:55 / /run/user/1000/doc rw,nosuid,nodev,relatime shared:599 - fuse.portal portal rw,user_id=1000,group_id=1000
+3885 46 0:58 / /run/user/1000/gvfs rw,nosuid,nodev,relatime shared:744 - fuse.gvfsd-fuse gvfsd-fuse rw,user_id=1000,group_id=1000
+4207 31 11:0 / /media/develop/My\040Passport ro,nosuid,nodev,relatime shared:1304 - iso9660 /dev/sr0 ro,nojoliet,check=s,map=n,blocksize=2048,uid=1000,gid=1000,iocharset=utf8

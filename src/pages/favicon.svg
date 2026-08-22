@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="procfs">
+  <title>procfs</title>
+  <!--
+    The path separator every page in this app is named after: `/proc`, and a URL
+    below the base that is read as the path it spells.
+
+    It carries its own dark tile rather than drawing on transparency, so it
+    holds up against a light browser chrome as well as a dark one. An SVG
+    favicon that leans on `prefers-color-scheme` is at the mercy of which
+    browser is asking; this one is not.
+
+    The colours are the app's own, taken from the custom properties in
+    src/styles.css: bg #0f1216, border #2a323c, accent #5aa9ff.
+  -->
+  <rect width="32" height="32" rx="7" fill="#0f1216" />
+  <rect x=".5" y=".5" width="31" height="31" rx="6.5" fill="none" stroke="#2a323c" />
+  <path
+    d="M10.75 25 21.25 7"
+    fill="none"
+    stroke="#5aa9ff"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+</svg>

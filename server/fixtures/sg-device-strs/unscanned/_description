@@ -1,0 +1,1 @@
+A device caught before its INQUIRY was read, where all three fields are the one static string the midlayer points them at

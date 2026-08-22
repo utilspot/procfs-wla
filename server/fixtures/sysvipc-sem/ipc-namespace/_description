@@ -1,0 +1,1 @@
+An IPC namespace read from inside a user namespace — an owner with no mapping reading as the overflow id, and ids from slots used before

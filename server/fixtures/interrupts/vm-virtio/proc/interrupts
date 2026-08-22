@@ -1,0 +1,11 @@
+                  CPU0       CPU1
+  0:         42          0   IO-APIC   2-edge      timer
+  1:          9          0   IO-APIC   1-edge      i8042
+ 24:          0          0   PCI-MSI 65536-edge      virtio0-config
+ 25:     128473         12   PCI-MSI 65537-edge      virtio0-input.0
+ 26:          8      94718   PCI-MSI 65538-edge      virtio0-output.0
+ 27:     284719          8   PCI-MSI 98304-edge      virtio1-req.0
+NMI:          0          0   Non-maskable interrupts
+LOC:    1847203    1839412   Local timer interrupts
+RES:     128473     129841   Rescheduling interrupts
+ERR:          0

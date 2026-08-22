@@ -1,0 +1,11 @@
+11:hugetlb:/
+10:pids:/user.slice/user-1000.slice/session-4.scope
+9:devices:/user.slice
+8:blkio:/user.slice
+7:net_cls,net_prio:/
+6:freezer:/
+5:memory:/user.slice/user-1000.slice/session-4.scope
+4:cpu,cpuacct:/user.slice
+3:cpuset:/
+2:perf_event:/
+1:name=systemd:/user.slice/user-1000.slice/session-4.scope

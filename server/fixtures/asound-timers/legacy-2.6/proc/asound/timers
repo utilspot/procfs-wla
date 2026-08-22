@@ -1,0 +1,5 @@
+G0: system timer : 10000.000us (10000000 ticks)
+G1: RTC timer : 976.562us (1024 ticks)
+  Client application : running
+P0-0-0: PCM playback 0-0-0 : SLAVE
+P0-0-1: PCM capture 0-0-1 : SLAVE

@@ -1,0 +1,1 @@
+Uids whose reads and writes never reached a disk at all — page cache, pipes and ttys, with every block counter at zero

@@ -1,0 +1,57 @@
+Name:	a.out
+Umask:	0022
+State:	t (tracing stop)
+Tgid:	7788
+Ngid:	0
+Pid:	7788
+PPid:	3117
+TracerPid:	7780
+Uid:	1000	1000	1000	1000
+Gid:	1000	1000	1000	1000
+FDSize:	256
+Groups:	4 24 27 30 46 100 1000 
+NStgid:	7788
+NSpid:	7788
+NSpgid:	7788
+NSsid:	7788
+VmPeak:	   14172 kB
+VmSize:	   14172 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	    5568 kB
+VmRSS:	    5568 kB
+RssAnon:	    1572 kB
+RssFile:	    3996 kB
+RssShmem:	       0 kB
+VmData:	    1400 kB
+VmStk:	     132 kB
+VmExe:	     760 kB
+VmLib:	    2400 kB
+VmPTE:	      60 kB
+VmSwap:	       0 kB
+HugetlbPages:	       0 kB
+CoreDumping:	0
+THP_enabled:	1
+Threads:	1
+SigQ:	0/62793
+SigPnd:	0000000000000000
+ShdPnd:	0000000000004000
+SigBlk:	0000000000000000
+SigIgn:	0000000000000003
+SigCgt:	0000000000000400
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	000001ffffffffff
+CapAmb:	0000000000000000
+NoNewPrivs:	0
+Seccomp:	0
+Seccomp_filters:	0
+Speculation_Store_Bypass:	thread vulnerable
+SpeculationIndirectBranch:	conditional enabled
+Cpus_allowed:	ff
+Cpus_allowed_list:	0-7
+Mems_allowed:	00000000,00000001
+Mems_allowed_list:	0
+voluntary_ctxt_switches:	9
+nonvoluntary_ctxt_switches:	0

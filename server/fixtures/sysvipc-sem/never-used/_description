@@ -1,0 +1,1 @@
+Sets nothing has ever operated on — an otime of 0 on every one of them, which is what a service that died between semget and semop leaves

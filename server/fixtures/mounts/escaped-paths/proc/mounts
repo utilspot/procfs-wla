@@ -1,0 +1,11 @@
+/dev/sda1 / ext4 rw,relatime 0 0
+proc /proc proc rw,relatime 0 0
+/dev/sdb1 /mnt/My\040Passport exfat rw,relatime,fmask=0022,dmask=0022,iocharset=utf8,errors=remount-ro 0 0
+//nas.local/Shared\040Media /mnt/nas/Shared\040Media cifs rw,relatime,vers=3.1.1,cache=strict,username=guest,uid=1000,forceuid,gid=1000,forcegid,addr=192.168.1.20,file_mode=0755,dir_mode=0755,soft,nounix,serverino,mapposix,rsize=4194304,wsize=4194304,bsize=1048576,echo_interval=60,actimeo=1 0 0
+/dev/sdc1 /mnt/tab\011separated ext4 rw,relatime 0 0
+/dev/sdc2 /mnt/back\134slash ext4 rw,relatime 0 0
+tmpfs /tmp/very/deeply/nested/mount/point/that/keeps/going/for/a/while tmpfs rw,nosuid,nodev,size=1024k,inode64 0 0
+none /sys/fs/cgroup/unified cgroup2 rw,nosuid,nodev,noexec,relatime 0 0
+gvfsd-fuse /run/user/1000/gvfs fuse.gvfsd-fuse rw,nosuid,nodev,relatime,user_id=1000,group_id=1000 0 0
+/dev/loop0 /snap/core22/1122 squashfs ro,nodev,relatime,errors=continue,threads=single 0 0
+/dev/loop1 /snap/firefox/4173 squashfs ro,nodev,relatime,errors=continue,threads=single 0 0

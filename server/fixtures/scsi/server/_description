@@ -1,0 +1,1 @@
+A RAID controller in HBA mode — four SAS disks, the enclosure processor beside them, the controller itself as a RAID device, and a BMC's virtual CD-ROM on a host of its own

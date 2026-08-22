@@ -1,0 +1,1 @@
+Two devices on a small machine: an optical drive at sg0 with a queue of one, and a SATA disk at sg1 with thirty-two

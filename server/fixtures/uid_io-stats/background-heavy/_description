@@ -1,0 +1,1 @@
+An app doing most of its I/O in the background, beside a system uid that never leaves the foreground

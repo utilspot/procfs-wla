@@ -1,0 +1,2 @@
+kernel.quiet
+init.arg = "--system"

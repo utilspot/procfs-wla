@@ -1,0 +1,1 @@
+A machine from before the unified hierarchy — a mount per controller group, co-mounted cpu and cpuacct, and systemd’s own named hierarchy with no controller on it at all

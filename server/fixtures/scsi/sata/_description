@@ -1,0 +1,1 @@
+SATA disks behind libata's SCSI translation, where the vendor is ATA for all of them and the model is the drive's own name cut to sixteen characters

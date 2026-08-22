@@ -1,0 +1,6 @@
+G0: system timer : 4000.000us (10000000 ticks)
+G3: HR timer : 0.001us (1000000000 ticks)
+P0-0-0: PCM Playback 0-0-0 : SLAVE
+P0-0-2: PCM Playback 0-0-2 : SLAVE
+P0-0-4: PCM Playback 0-0-4 : 5804.988us (1 ticks) SLAVE
+P0-0-6: PCM Playback 0-0-6 : SLAVE

@@ -1,0 +1,1 @@
+Pid 1 inside a Docker container — an overlay root and the host’s files bound in, and nothing of the machine outside it

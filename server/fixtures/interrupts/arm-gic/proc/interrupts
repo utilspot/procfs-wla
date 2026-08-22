@@ -1,0 +1,13 @@
+                  CPU0       CPU1       CPU2       CPU3
+ 11:    1284736    1293841    1287412    1290183   GICv3  30 Level     arch_timer
+ 14:          0          0          0          0   GICv3  27 Level     kvm guest vtimer
+ 23:       4821          0          0          0   GICv3  33 Level     uart-pl011
+ 27:      18472          0          0          0   GICv3 101 Level     eth0
+ 30:      92841          0          0          0   GICv3  98 Level     mmc0
+IPI0:     284719     287412     286103     285941   Rescheduling interrupts
+IPI1:      18472      18391      18402      18377   Function call interrupts
+IPI2:          0          0          0          0   CPU stop interrupts
+IPI3:          0          0          0          0   CPU stop (for crash dump) interrupts
+IPI4:         12         12         12         12   Timer broadcast interrupts
+IPI5:      92841      93012      92904      92871   IRQ work interrupts
+ERR:          0

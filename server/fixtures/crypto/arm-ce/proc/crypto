@@ -1,0 +1,161 @@
+name         : gcm(aes)
+driver       : gcm-aes-ce
+module       : ghash_ce
+priority     : 300
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : aead
+async        : no
+blocksize    : 1
+ivsize       : 12
+maxauthsize  : 16
+geniv        : <none>
+
+name         : xts(aes)
+driver       : xts-aes-ce
+module       : aes_ce_blk
+priority     : 300
+refcnt       : 2
+selftest     : passed
+internal     : no
+type         : skcipher
+async        : no
+blocksize    : 16
+min keysize  : 32
+max keysize  : 64
+ivsize       : 16
+chunksize    : 16
+walksize     : 16
+
+name         : cbc(aes)
+driver       : cbc-aes-ce
+module       : aes_ce_blk
+priority     : 300
+refcnt       : 3
+selftest     : passed
+internal     : no
+type         : skcipher
+async        : no
+blocksize    : 16
+min keysize  : 16
+max keysize  : 32
+ivsize       : 16
+chunksize    : 16
+walksize     : 16
+
+name         : cbc(aes)
+driver       : cbc-aes-neonbs
+module       : aes_neon_bs
+priority     : 250
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : skcipher
+async        : no
+blocksize    : 16
+min keysize  : 16
+max keysize  : 32
+ivsize       : 16
+chunksize    : 16
+walksize     : 128
+
+name         : aes
+driver       : aes-ce
+module       : aes_ce_cipher
+priority     : 250
+refcnt       : 4
+selftest     : passed
+internal     : no
+type         : cipher
+blocksize    : 16
+min keysize  : 16
+max keysize  : 32
+
+name         : aes
+driver       : aes-generic
+module       : aes_generic
+priority     : 100
+refcnt       : 2
+selftest     : passed
+internal     : no
+type         : cipher
+blocksize    : 16
+min keysize  : 16
+max keysize  : 32
+
+name         : sha256
+driver       : sha256-ce
+module       : sha2_ce
+priority     : 200
+refcnt       : 3
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 64
+digestsize   : 32
+
+name         : sha256
+driver       : sha256-arm64
+module       : sha256_arm64
+priority     : 125
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 64
+digestsize   : 32
+
+name         : sha3-256
+driver       : sha3-256-ce
+module       : sha3_ce
+priority     : 200
+refcnt       : 1
+selftest     : failed
+internal     : no
+type         : shash
+blocksize    : 136
+digestsize   : 32
+
+name         : sha3-256
+driver       : sha3-256-generic
+module       : sha3_generic
+priority     : 100
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 136
+digestsize   : 32
+
+name         : crct10dif
+driver       : crct10dif-arm64-ce
+module       : crct10dif_ce
+priority     : 200
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : shash
+blocksize    : 1
+digestsize   : 2
+
+name         : ghash
+driver       : ghash-ce
+module       : ghash_ce
+priority     : 300
+refcnt       : 1
+selftest     : passed
+internal     : yes
+type         : shash
+blocksize    : 16
+digestsize   : 16
+
+name         : stdrng
+driver       : drbg_pr_hmac_sha256
+module       : kernel
+priority     : 206
+refcnt       : 1
+selftest     : passed
+internal     : no
+type         : rng
+seedsize     : 0

@@ -1,0 +1,6 @@
+55a4c1e00000-55a4c1e02000 r--p 00000000 08:02 24392871                   /usr/sbin/nginx
+55a4c1e02000-55a4c1e07000 r-xp 00002000 08:02 24392871                   /usr/sbin/nginx
+7f2c4d000000-7f2c4d002000 r--p 00000000 08:02 1957                       /usr/lib/x86_64-linux-gnu/libssl.so.3 (deleted)
+7f2c4d002000-7f2c4d07c000 r-xp 00002000 08:02 1957                       /usr/lib/x86_64-linux-gnu/libssl.so.3 (deleted)
+7f2c4d07c000-7f2c4d090000 r--p 0007c000 08:02 1957                       /usr/lib/x86_64-linux-gnu/libssl.so.3 (deleted)
+7ffc1b9c0000-7ffc1b9e1000 rw-p 00000000 00:00 0                          [stack]

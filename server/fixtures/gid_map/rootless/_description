@@ -1,0 +1,1 @@
+A rootless container — group 0 inside is an ordinary group outside, with a subgid range behind it that only newgidmap could have written

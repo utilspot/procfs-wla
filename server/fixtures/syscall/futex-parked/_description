@@ -1,0 +1,1 @@
+Threads parked — one on a futex, which is where a blocked mutex waits, and one asleep on a clock

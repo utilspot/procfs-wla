@@ -1,0 +1,1 @@
+Uniprocessor board — one CPU and no scheduling domains, since there is nowhere to balance to

@@ -1,0 +1,1 @@
+One device with four playback substreams, so four streams can be open at once without a sound server mixing them

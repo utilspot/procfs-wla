@@ -1,0 +1,1 @@
+A machine built out of bind mounts — a read-only bind of a writable filesystem, one nested inside another, and an unbindable cache the tree will not propagate

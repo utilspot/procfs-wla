@@ -1,0 +1,1 @@
+A virtio-scsi guest: two targets on the hypervisor's one host, a disk and a DVD-ROM, with a firmware revision that is not a number

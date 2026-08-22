@@ -1,0 +1,16 @@
+Character devices:
+  1 mem
+  4 /dev/vc/0
+  4 tty
+  5 /dev/tty
+  5 /dev/console
+  5 /dev/ptmx
+ 10 misc
+136 pts
+
+Block devices:
+  7 loop
+  8 sd
+252 device-mapper
+254 mdp
+259 blkext

@@ -1,0 +1,13 @@
+rtc_time	: 09:15:44
+rtc_date	: 2008-11-02
+rtc_epoch	: 1900
+alarm		: **:30:00
+DST_enable	: no
+BCD		: yes
+24hr		: yes
+square_wave	: no
+alarm_IRQ	: no
+update_IRQ	: no
+periodic_IRQ	: no
+periodic_freq	: 1024
+batt_status	: okay

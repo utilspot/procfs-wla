@@ -1,0 +1,1 @@
+File server — eight CPUs with one NVMe queue pinned per CPU, and a Mellanox NIC spread evenly

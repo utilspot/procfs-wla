@@ -1,0 +1,6 @@
+kernel.console = "ttyS0,115200n8"
+kernel.dyndbg = "module nvme +p"
+init.arg = "sh", "-c", "echo hello, world > /dev/kmsg"
+ftrace.instance.boot.events = "sched.sched_switch", "sched.sched_wakeup"
+ftrace.instance.boot.filter = "prev_pid > 100 && next_prio < 20"
+systemd.setenv = "GREETING=hello, there"

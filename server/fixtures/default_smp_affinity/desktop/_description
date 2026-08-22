@@ -1,0 +1,1 @@
+Ordinary four-CPU machine — every slot set, which is what a kernel starts with when nothing passed irqaffinity=
