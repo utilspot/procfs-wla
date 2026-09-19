@@ -1,12 +1,12 @@
 #include "config.h"
 
 #include <libnetq/Library.h>
-#include <libnetq/Path.h>
+#include <libnetq/fs/Path.h>
 #include <libnetq/ErrorCode.h>
-#include <libnetq/FileHandle.h>
-#include <libnetq/HttpHeader.h>
-#include <libnetq/MediaType.h>
-#include <libnetq/Dir.h>
+#include <libnetq/fs/FileHandle.h>
+#include <libnetq/http/HttpHeader.h>
+#include <libnetq/http/MediaType.h>
+#include <libnetq/fs/Dir.h>
 #include <libnetq/fs/Stat.h>
 #include <libnetq/string/StringPrint.h>
 #include <libnetq/Context.h>
