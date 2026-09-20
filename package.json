@@ -1,6 +1,6 @@
 {
   "name": "procfs-wla",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A page per /proc entry, parsing what the kernel prints there",
   "license": "MIT",
   "type": "module",
