@@ -1,6 +1,6 @@
 {
   "name": "procfs-wla",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A page per /proc entry, parsing what the kernel prints there",
   "license": "MIT",
   "type": "module",
@@ -27,7 +27,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/express": "^5.0.3",
-    "@types/node": "^24.9.1",
+    "@types/node": "^24.19.1",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.1",
     "@vitejs/plugin-react": "^5.0.4",
@@ -40,6 +40,6 @@
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vite": "^7.1.9",
-    "vitest": "^3.2.4"
+    "vitest": "^5.0.3"
   }
 }

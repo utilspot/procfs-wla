@@ -52,6 +52,16 @@
   box-sizing: border-box;
 }
 
+/*
+ * Room for the scrollbar on every page, whether it scrolls or not. The page is
+ * centred in what is left beside the scrollbar, so without this a long page —
+ * the listing of /proc — sits half a scrollbar to the left of a short one, and
+ * the path at the top jumps sideways from page to page.
+ */
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   margin: 0;
   background: var(--bg);
