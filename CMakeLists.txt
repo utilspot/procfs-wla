@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(procfs-wla VERSION 1.0.1 LANGUAGES C)
+project(procfs-wla VERSION 1.1.0 LANGUAGES C)
 
 include(GNUInstallDirs)
 
@@ -69,8 +69,10 @@ source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES server.c)
 add_executable(procfs_server server.c)
 target_link_libraries(procfs_server PRIVATE LibNetQ::LibNetQ)
 
-if (CMAKE_C_COMPILER_ID MATCHES "^(GNU|Clang)$")
-  target_link_options(procfs_server PRIVATE "-Wl,-rpath,$ORIGIN/../lib")
+if (APPLE)
+  set_target_properties(procfs_server PROPERTIES INSTALL_RPATH "@loader_path/../lib")
+elseif (UNIX)
+  set_target_properties(procfs_server PROPERTIES INSTALL_RPATH "$ORIGIN/../lib")
 endif ()
 
 if (PROCFS_INSTALL_SERVER)

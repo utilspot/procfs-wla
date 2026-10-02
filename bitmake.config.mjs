@@ -64,6 +64,7 @@ export default {
     sourceUrl: "https://github.com/DaveGamble/cJSON/archive/refs/tags/v1.7.19.tar.gz",
     action: "cmake",
     cacheVariables: {
+      CMAKE_POLICY_VERSION_MINIMUM: 3.5,
       CMAKE_PREFIX_PATH: destDir + prefix,
       CMAKE_INSTALL_PREFIX: prefix,
       BUILD_SHARED_LIBS: false,
@@ -74,7 +75,7 @@ export default {
     destDir,
   },
   "bundle:libnetq": {
-    sourceUrl: "https://github.com/yacubin/libnetq/archive/refs/tags/v1.0.19.tar.gz",
+    sourceUrl: "https://github.com/libnetq/libnetq/archive/refs/tags/v1.0.19.tar.gz",
     action: "cmake",
     cacheVariables: {
       CMAKE_PREFIX_PATH: destDir + prefix,
