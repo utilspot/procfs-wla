@@ -1,6 +1,6 @@
 {
   "name": "procfs-wla",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A page per /proc entry, parsing what the kernel prints there",
   "license": "MIT",
   "type": "module",
@@ -17,6 +17,7 @@
     "preview": "tsx scripts/vite.ts preview",
     "bitmake": "npx bitmake build",
     "server": "./build/package/bin/procfs_server",
+    "clean": "node tools/clean.mjs",
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:watch": "vitest"
@@ -31,7 +32,7 @@
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.1",
     "@vitejs/plugin-react": "^5.0.4",
-    "bitmake": "^0.0.1-develop.15",
+    "bitmake": "^0.0.1-develop.17",
     "concurrently": "^9.2.1",
     "express": "^5.1.0",
     "jsdom": "^27.0.0",
