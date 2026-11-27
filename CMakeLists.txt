@@ -73,6 +73,7 @@ if (APPLE)
   set_target_properties(procfs_server PROPERTIES INSTALL_RPATH "@loader_path/../lib")
 elseif (UNIX)
   set_target_properties(procfs_server PROPERTIES INSTALL_RPATH "$ORIGIN/../lib")
+  target_link_options(procfs_server PRIVATE -Wl,--disable-new-dtags)
 endif ()
 
 if (PROCFS_INSTALL_SERVER)

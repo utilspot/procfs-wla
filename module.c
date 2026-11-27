@@ -86,7 +86,7 @@ static int writeBytes(NQUint8Array* bytes, NQWebResponse* response)
 static int htmlHandler(struct WebProcfsExecutor* procfs, const char* filename, NQWebRequest* request, NQWebResponse* response)
 {
   NQStat stat;
-  int ret = NQGetStat(filename, &stat);
+  int ret = NQGetStat(filename, NQ_STAT_FOLLOW, &stat);
   if (ret != 0) {
     return NQ_HTTP_BAD_REQUEST;
   }
@@ -148,8 +148,9 @@ static bool jsonWriterHandler(void* userdata, const char* characters, size_t siz
 
 static int infoHandler(struct WebProcfsExecutor* procfs, const char* dirname, NQWebRequest* request, NQWebResponse* response)
 {
-  NQDir* dir =  NQDir_open(dirname);
-  if (dir == NULL) {
+  NQDir* dir;
+  int ret =  NQDir_open(dirname, &dir);
+  if (ret != 0) {
     return NQ_HTTP_BAD_REQUEST;
   }
 
@@ -159,7 +160,7 @@ static int infoHandler(struct WebProcfsExecutor* procfs, const char* dirname, NQ
   NQJSONWriter_init(&writer, &jsonWriterHandler, response);
   NQJSONWriter_writeObjectBegin(&writer);
 
-  while (NQDir_next(dir)) {
+  for (bool ok = NQDir_first(dir); ok; ok = NQDir_next(dir)) {
     const char* name = NQDir_name(dir);
     if (name[0] == '.' && (name[1] == '\0' || (name[1] == '.' && name[2] == '\0')))
       continue;
@@ -167,6 +168,21 @@ static int infoHandler(struct WebProcfsExecutor* procfs, const char* dirname, NQ
       NQJSONWriter_writeKeyInt32(&writer, name, 8); // REG
     else if (NQDir_isDirectory(dir))
       NQJSONWriter_writeKeyInt32(&writer, name, 4); // DIR
+    else {
+      // Symlinks such as self, thread-self and <pid>/cwd: report what they
+      // point to. Links that are broken or unreadable are left out.
+      NQPathBuilder pathBld;
+      NQPathBuilder_init(&pathBld);
+      NQStat st;
+      if (NQPathBuilder_join2(&pathBld, dirname, name) &&
+          NQGetStat(NQPathBuilder_characters(&pathBld), NQ_STAT_FOLLOW, &st) == 0) {
+        if (NQStat_isFile(&st))
+          NQJSONWriter_writeKeyInt32(&writer, name, 8); // REG
+        else if (NQStat_isDirectory(&st))
+          NQJSONWriter_writeKeyInt32(&writer, name, 4); // DIR
+      }
+      NQPathBuilder_finalize(&pathBld);
+    }
   }
   NQDir_close(dir);
 

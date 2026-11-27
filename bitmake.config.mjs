@@ -6,7 +6,7 @@ const destDir = "${binaryRoot}";
 
 export default {
   "bundle:zlib": {
-    sourceUrl: "https://zlib.net/zlib-1.3.2.tar.gz",
+    sourceUrl: "https://www.zlib.net/fossils/zlib-1.3.2.tar.gz",
     action: "configure",
     variables: {
       prefix,
@@ -75,7 +75,7 @@ export default {
     destDir,
   },
   "bundle:libnetq": {
-    sourceUrl: "https://github.com/libnetq/libnetq/archive/refs/tags/v1.0.19.tar.gz",
+    sourceUrl: "https://github.com/libnetq/libnetq/archive/refs/tags/v1.2.0.tar.gz",
     action: "cmake",
     cacheVariables: {
       CMAKE_PREFIX_PATH: destDir + prefix,
@@ -83,7 +83,7 @@ export default {
       LNQ_LIBRARY_TYPE: "SHARED",
       LNQ_WITH_ZLIB: true,
       LNQ_WITH_OPENSSL: true,
-      LNQ_WITH_CJSON: true,
+      LNQ_JSON_BACKEND: "CJSON",
       LNQ_WITH_MHD: true,
     },
     environment,
@@ -95,6 +95,7 @@ export default {
       CMAKE_MODULE_PATH: destDir + `${prefix}/share/libnetq/cmake`,
       CMAKE_PREFIX_PATH: destDir + prefix,
       CMAKE_INSTALL_PREFIX: prefix,
+      PROCFS_BASE_URL: "/",
     },
     sourceDir: "${sourceRoot}",
     environment,
